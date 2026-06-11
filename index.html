@@ -1,0 +1,2757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你与哪位导演共享灵魂？ | 导演人格测试</title>
+<meta property="og:title" content="你与哪位导演共享灵魂？">
+<meta property="og:description" content="32位电影作者，5个灵魂维度 —— 找到与你共振的那位导演。">
+<meta property="og:type" content="website">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#faf8f3;--card:#ffffff;--text:#2c2416;--t2:#6b5e4a;--t3:#9c8b70;
+  --ac:#7a9a70;--a2:#c49b8a;--a3:#c4a45a;--bd:#e8e0d5;--sh:0 2px 16px rgba(60,40,20,.05);
+  --shL:0 8px 40px rgba(60,40,20,.08);--r:16px
+}
+
+body{
+  font-family:'Noto Serif SC','STSong','Songti SC','SimSun',serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;
+  background-image:
+    radial-gradient(ellipse at 15% 15%,rgba(122,154,112,.05) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 70%,rgba(196,155,138,.04) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 95%,rgba(196,164,90,.03) 0%,transparent 50%);
+  background-attachment:fixed
+}
+
+.app{max-width:680px;margin:0 auto;padding:36px 18px 80px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+
+.card{
+  background:var(--card);border:1px solid var(--bd);border-radius:var(--r);
+  padding:44px 36px;box-shadow:var(--sh);transition:all .4s ease;position:relative
+}
+.card.hidden{display:none}
+
+.rule{width:48px;height:2px;background:var(--a2);margin:0 auto 24px;border-radius:1px}
+.divider{width:100%;height:1px;background:var(--bd);margin:28px 0}
+
+/* ===== 欢迎页 ===== */
+.hero-icon{text-align:center;font-size:56px;margin-bottom:8px;line-height:1}
+.hero-title{font-size:30px;font-weight:900;letter-spacing:2px;text-align:center;color:var(--text);margin-bottom:6px}
+.hero-sub{text-align:center;font-size:14px;color:var(--t3);letter-spacing:4px;margin-bottom:16px;text-transform:uppercase}
+.hero-desc{text-align:center;color:var(--t2);line-height:2.1;margin-bottom:32px;font-size:15px}
+.hero-meta{display:flex;justify-content:center;gap:28px;margin-bottom:32px}
+.hero-meta-item{text-align:center}
+.hero-meta-num{font-size:28px;font-weight:700;color:var(--ac)}
+.hero-meta-label{font-size:12px;color:var(--t3);letter-spacing:1px;margin-top:2px}
+
+.btn-primary{
+  display:block;width:100%;background:var(--ac);color:#fff;border:none;
+  border-radius:12px;padding:17px;font-size:17px;font-weight:700;cursor:pointer;
+  letter-spacing:3px;font-family:inherit;transition:all .3s ease;
+  box-shadow:0 4px 16px rgba(122,154,112,.25)
+}
+.btn-primary:hover{background:#6b8a61;transform:translateY(-1px);box-shadow:0 6px 24px rgba(122,154,112,.35)}
+.btn-primary:active{transform:scale(.98)}
+
+/* ===== 进度 ===== */
+.progress-wrap{margin-bottom:28px}
+.progress-bar{height:3px;background:#efebe4;border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--ac);border-radius:2px;transition:width .5s ease}
+.progress-text{text-align:right;font-size:12px;color:var(--t3);margin-top:6px;letter-spacing:2px}
+
+/* ===== 题目 ===== */
+.q-num{font-size:11px;letter-spacing:3px;color:var(--a2);margin-bottom:14px;font-weight:600}
+.q-text{font-size:20px;line-height:1.7;margin-bottom:32px;text-align:center;color:var(--text)}
+.options{display:flex;flex-direction:column;gap:12px}
+.opt-btn{
+  background:#faf8f5;border:1px solid var(--bd);border-radius:12px;
+  padding:18px 22px;color:var(--text);font-size:15px;cursor:pointer;
+  transition:all .28s ease;text-align:left;font-family:inherit;
+  display:flex;align-items:flex-start;gap:14px;line-height:1.6
+}
+.opt-btn:hover{border-color:var(--ac);background:#f6faf3;transform:translateX(3px)}
+.opt-btn:active{transform:scale(.985)}
+.opt-letter{
+  width:32px;height:32px;border-radius:8px;background:rgba(122,154,112,.12);
+  color:var(--ac);display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;flex-shrink:0;margin-top:1px
+}
+
+/* ===== 结果页头部 ===== */
+.result-header{text-align:center;margin-bottom:20px}
+.result-emoji{
+  font-size:96px;text-align:center;line-height:1.1;margin-bottom:0;
+  display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.06))
+}
+.result-name-block{margin-bottom:10px}
+.result-name-cn{
+  font-size:34px;font-weight:900;letter-spacing:4px;color:var(--text);line-height:1.2;
+}
+.result-name-en{
+  font-size:13px;color:var(--t3);letter-spacing:3px;margin-top:2px;
+}
+.result-type-tag{
+  display:inline-block;padding:5px 18px;border-radius:20px;
+  font-size:13px;font-weight:700;letter-spacing:5px;font-family:monospace;
+  border:1px solid var(--bd);color:var(--t3);margin-top:8px;
+}
+
+/* 语录 */
+.quote-block{
+  text-align:center;margin:18px auto 14px;max-width:460px;
+}
+.quote-text{
+  font-family:'Cormorant Garamond','Noto Serif SC',serif;
+  font-style:italic;font-size:18px;color:var(--t2);line-height:1.7;
+  position:relative;padding:0 16px;
+}
+.quote-text::before{content:'"';font-size:44px;color:var(--a2);opacity:.35;position:absolute;left:-6px;top:-8px;line-height:1}
+.quote-text::after{content:'"';font-size:44px;color:var(--a2);opacity:.35;position:absolute;right:-6px;bottom:-20px;line-height:1}
+.quote-source{font-size:13px;color:var(--t3);letter-spacing:2px;margin-top:10px}
+
+/* 简介 */
+.result-bio{
+  text-align:center;color:var(--t2);line-height:2;margin:0 auto 24px;
+  font-size:15px;max-width:500px;
+}
+
+/* 段标题 */
+.section-title{
+  font-size:11px;letter-spacing:5px;color:var(--t3);text-align:center;
+  margin:32px 0 18px;text-transform:uppercase;
+}
+.section-title:first-of-type{margin-top:8px}
+
+/* 雷达图 */
+.radar-wrap{
+  text-align:center;margin:8px 0 24px;padding:20px 0;
+  background:linear-gradient(180deg,rgba(122,154,112,.03) 0%,rgba(196,155,138,.03) 100%);
+  border-radius:16px;
+}
+.radar-canvas{display:inline-block}
+
+/* 维度条 */
+.dim-bars-wrap{margin-bottom:8px}
+
+/* 维度条（增强版） */
+.dim-row-e{
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+}
+.dim-label-e{width:72px;font-size:11px;letter-spacing:1px;color:var(--t3);flex-shrink:0;line-height:1.3}
+.dim-label-e.r{text-align:right}.dim-label-e.l{text-align:left}
+.dim-track-e{flex:1;height:24px;background:#f5f1e9;border-radius:12px;position:relative;overflow:hidden}
+.dim-fill-e{
+  height:100%;border-radius:12px;transition:width .8s cubic-bezier(.22,.61,.36,1);
+  display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+  font-size:11px;font-weight:700;color:#fff;min-width:36px;
+}
+.dim-score{font-size:11px;color:var(--t3);width:28px;text-align:center;flex-shrink:0}
+
+/* 光影记忆 — 独立卡片 */
+.memory-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.memory-card{
+  background:#fbfaf6;border:1px solid var(--bd);border-radius:14px;
+  padding:22px 20px;text-align:center;
+}
+.memory-card-icon{font-size:20px;margin-bottom:6px}
+.memory-card-label{font-size:10px;letter-spacing:3px;color:var(--t3);margin-bottom:8px;text-transform:uppercase}
+.memory-card-text{font-size:14px;color:var(--t2);line-height:1.9}
+.memory-card-text .highlight{color:var(--a2);font-weight:600}
+.memory-card.keywords{border-left:3px solid var(--a2)}
+.memory-card.aesthetic{border-left:3px solid var(--ac)}
+.memory-card.inspire{border-left:3px solid var(--a3)}
+
+/* 灵魂近邻 */
+.neighbors{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.neighbor-chip{
+  background:#fff;border:1px solid var(--bd);border-radius:12px;
+  padding:14px 18px;text-align:center;cursor:default;
+  transition:all .25s ease;min-width:100px;
+}
+.neighbor-chip:hover{transform:translateY(-2px);box-shadow:var(--shL)}
+.neighbor-emoji{font-size:28px;margin-bottom:4px}
+.neighbor-name{font-size:14px;font-weight:600;color:var(--text)}
+.neighbor-en{font-size:10px;color:var(--t3);letter-spacing:1px}
+.neighbor-sim{font-size:10px;color:var(--ac);margin-top:2px}
+
+/* 影片 */
+.films{margin-bottom:24px}
+.film-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.film-chip{background:#f6f3ec;border:1px solid var(--bd);border-radius:20px;padding:8px 16px;font-size:13px;color:var(--t2)}
+
+/* 分享 */
+.share-section{margin-bottom:20px}
+.share-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-btn{
+  flex:1;min-width:100px;padding:12px 16px;border-radius:10px;
+  border:1px solid var(--bd);background:#fff;cursor:pointer;
+  font-family:inherit;font-size:13px;color:var(--t2);
+  transition:all .25s ease;display:flex;align-items:center;justify-content:center;gap:6px
+}
+.share-btn:hover{border-color:var(--ac);color:var(--ac)}
+.share-btn.copy{border-color:var(--a3);color:var(--a3)}
+.share-btn.copy:hover{background:rgba(196,164,90,.06)}
+
+.btn-restart{
+  display:block;width:100%;background:#f6f3ec;border:1px solid var(--bd);
+  border-radius:12px;padding:15px;color:var(--t2);font-size:14px;
+  cursor:pointer;letter-spacing:3px;font-family:inherit;transition:all .25s ease
+}
+.btn-restart:hover{border-color:var(--t3);color:var(--text)}
+
+.toast{
+  position:fixed;bottom:40px;left:50%;transform:translateX(-50%);
+  background:var(--text);color:#fff;padding:12px 24px;border-radius:24px;
+  font-size:14px;letter-spacing:1px;z-index:100;opacity:0;
+  transition:opacity .3s ease;pointer-events:none
+}
+.toast.show{opacity:1}
+
+
+/* 导演信 */
+.letter-card{
+  background:linear-gradient(135deg,rgba(196,155,138,.06) 0%,rgba(122,154,112,.04) 100%);
+  border:1px solid var(--bd);border-radius:14px;padding:28px 24px;margin-bottom:20px
+}
+.letter-head{
+  font-size:12px;letter-spacing:3px;color:var(--a2);text-align:center;margin-bottom:16px
+}
+.letter-body{
+  font-size:15px;line-height:2.2;color:var(--text);text-align:justify;
+  font-style:italic;
+}
+.letter-body .highlight{color:var(--a2);font-style:normal;font-weight:600}
+.letter-sign{
+  text-align:right;margin-top:16px;font-size:14px;color:var(--t3);letter-spacing:1px
+}
+
+/* 你的电影 */
+.film-card{
+  background:linear-gradient(135deg,rgba(122,154,112,.05) 0%,rgba(196,164,90,.05) 100%);
+  border:1px solid var(--bd);border-radius:14px;padding:28px 24px;margin-bottom:20px;text-align:center
+}
+.film-card-title{
+  font-size:22px;font-weight:900;letter-spacing:3px;color:var(--text);margin-bottom:4px
+}
+.film-card-subtitle{
+  font-size:12px;color:var(--t3);letter-spacing:2px;margin-bottom:8px
+}
+.film-card-logline{
+  font-size:15px;line-height:1.9;color:var(--t2);margin-bottom:14px
+}
+.film-card-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.film-card-tag{
+  background:#fff;border:1px solid var(--bd);border-radius:20px;
+  padding:6px 14px;font-size:12px;color:var(--t3);letter-spacing:1px
+}
+
+/* 深度维度解读 */
+.deep-dims{margin-bottom:20px}
+.deep-dim-item{margin-bottom:16px;padding:16px;background:#fbfaf6;border-radius:10px;border-left:3px solid var(--a2)}
+.deep-dim-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;letter-spacing:1px}
+.deep-dim-text{font-size:13px;color:var(--t2);line-height:1.8}
+
+
+.fade-up{animation:fadeUp .5s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes drawLine{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+
+@media(max-width:500px){
+  .app{padding:16px 10px 50px}
+  .card{padding:24px 16px}
+  .hero-title{font-size:23px}
+  .q-text{font-size:17px}
+  .opt-btn{padding:14px 16px;font-size:14px}
+  .result-name-cn{font-size:26px}
+  .quote-text{font-size:15px}
+  .share-btns{flex-direction:column}
+  .dim-label-e{width:56px;font-size:10px}
+  .neighbors{flex-direction:column;align-items:center}
+  .neighbor-chip{width:100%;max-width:200px}
+}
+
+
+50%{transform:scaleY(.4)}}
+
+/* ===== 增强报告排版 ===== */
+
+/* 报告卡片整体 */
+#result.card { padding: 40px 40px 48px; }
+
+/* 结果头部增强 */
+.result-header {
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--bd);
+  position: relative;
+}
+.result-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: var(--a2);
+  border-radius: 1px;
+}
+.result-emoji {
+  font-size: 108px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,.08));
+  animation: emojiFloat 3s ease-in-out infinite;
+}
+@keyframes emojiFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.result-name-cn {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 6px;
+  background: linear-gradient(180deg, var(--text) 0%, var(--t2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.3;
+}
+.result-name-en {
+  font-size: 14px;
+  color: var(--t3);
+  letter-spacing: 4px;
+  margin-top: 4px;
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  font-style: italic;
+}
+.result-type-tag {
+  display: inline-block;
+  padding: 6px 22px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  border: 1.5px solid var(--bd);
+  color: var(--t3);
+  margin-top: 12px;
+  background: rgba(250,248,243,.5);
+}
+
+/* 语录增强 */
+.quote-block {
+  text-align: center;
+  margin: 24px auto 18px;
+  max-width: 480px;
+  position: relative;
+  padding: 20px 24px;
+}
+.quote-text {
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--t2);
+  line-height: 1.8;
+  position: relative;
+  padding: 0 8px;
+}
+.quote-text::before {
+  content: '\201C';
+  font-size: 56px;
+  color: var(--a2);
+  opacity: .25;
+  position: absolute;
+  left: -16px;
+  top: -18px;
+  line-height: 1;
+  font-style: normal;
+}
+.quote-text::after {
+  content: '\201D';
+  font-size: 56px;
+  color: var(--a2);
+  opacity: .25;
+  position: absolute;
+  right: -16px;
+  bottom: -28px;
+  line-height: 1;
+  font-style: normal;
+}
+.quote-source {
+  font-size: 13px;
+  color: var(--t3);
+  letter-spacing: 3px;
+  margin-top: 14px;
+}
+
+/* 简介增强 */
+.result-bio {
+  text-align: center;
+  color: var(--t2);
+  line-height: 2.1;
+  margin: 0 auto 28px;
+  font-size: 15px;
+  max-width: 480px;
+}
+
+/* 段标题增强 */
+.section-title {
+  font-size: 12px;
+  letter-spacing: 6px;
+  color: var(--t3);
+  text-align: center;
+  margin: 36px 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: 600;
+}
+.section-title::before,
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--bd) 30%, var(--bd) 70%, transparent);
+}
+
+/* 雷达图增强 */
+.radar-wrap {
+  text-align: center;
+  margin: 12px 0 28px;
+  padding: 28px 0;
+  background: linear-gradient(180deg, rgba(122,154,112,.04) 0%, rgba(196,155,138,.04) 50%, rgba(196,164,90,.03) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(232,224,213,.5);
+}
+
+/* 维度条增强 */
+.dim-bars-wrap { margin-bottom: 12px; }
+.dim-row-e {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 6px 0;
+}
+.dim-label-e {
+  width: 68px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--t2);
+  flex-shrink: 0;
+  line-height: 1.3;
+  font-weight: 600;
+}
+.dim-label-e.r { text-align: right; }
+.dim-label-e.l { text-align: left; }
+.dim-track-e {
+  flex: 1;
+  height: 28px;
+  background: #f7f4ed;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.04);
+}
+.dim-fill-e {
+  height: 100%;
+  border-radius: 14px;
+  transition: width 1s cubic-bezier(.22,.61,.36,1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  min-width: 36px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.dim-score {
+  font-size: 12px;
+  color: var(--t2);
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+/* 光影记忆卡片增强 */
+.memory-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+.memory-card {
+  background: #fbfaf6;
+  border: 1px solid var(--bd);
+  border-radius: 16px;
+  padding: 26px 24px;
+  text-align: center;
+  transition: all .35s ease;
+  position: relative;
+}
+.memory-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shL);
+}
+.memory-card-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.memory-card-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--t3);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.memory-card-text {
+  font-size: 14px;
+  color: var(--t2);
+  line-height: 2;
+}
+.memory-card-text .highlight { color: var(--a2); font-weight: 600; }
+.memory-card.keywords { border-left: 4px solid var(--a2); }
+.memory-card.aesthetic { border-left: 4px solid var(--ac); }
+.memory-card.inspire { border-left: 4px solid var(--a3); }
+
+/* 灵魂近邻增强 */
+.neighbors {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.neighbor-chip {
+  background: #fff;
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 18px 22px;
+  text-align: center;
+  cursor: default;
+  transition: all .3s ease;
+  min-width: 110px;
+}
+.neighbor-chip:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(60,40,20,.1);
+  border-color: var(--a2);
+}
+.neighbor-emoji { font-size: 32px; margin-bottom: 6px; }
+.neighbor-name { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+.neighbor-en { font-size: 10px; color: var(--t3); letter-spacing: 1px; margin-top: 2px; }
+.neighbor-sim {
+  font-size: 11px;
+  color: var(--ac);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* 导演信增强 */
+.letter-card {
+  background: linear-gradient(160deg, rgba(196,155,138,.07) 0%, rgba(250,248,243,.5) 40%, rgba(122,154,112,.05) 100%);
+  border: 1px solid var(--bd);
+  border-radius: 18px;
+  padding: 40px 32px 32px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.letter-card::before {
+  content: '✉️';
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;
+  background: var(--card);
+  padding: 0 18px;
+  line-height: 1;
+}
+.letter-head {
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--a2);
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.letter-body {
+  font-size: 15px;
+  line-height: 2.3;
+  color: var(--text);
+  text-align: justify;
+  font-style: italic;
+}
+.letter-body p {
+  margin-bottom: 14px;
+}
+.letter-body .highlight { color: var(--a2); font-style: normal; font-weight: 600; }
+.letter-sign {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 15px;
+  color: var(--t2);
+  letter-spacing: 3px;
+  font-weight: 600;
+}
+
+/* 你的电影增强 */
+.film-card {
+  background: linear-gradient(160deg, rgba(42,58,74,.04) 0%, rgba(122,154,112,.05) 50%, rgba(196,164,90,.04) 100%);
+  border: 1px solid var(--bd);
+  border-radius: 18px;
+  padding: 36px 32px;
+  margin-bottom: 24px;
+  text-align: center;
+  position: relative;
+}
+.film-card::before {
+  content: '🎬';
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;
+  background: var(--card);
+  padding: 0 18px;
+  line-height: 1;
+}
+.film-card-title {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--text);
+  margin-bottom: 6px;
+  margin-top: 8px;
+}
+.film-card-subtitle {
+  font-size: 11px;
+  color: var(--t3);
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+.film-card-logline {
+  font-size: 16px;
+  line-height: 2;
+  color: var(--t2);
+  margin-bottom: 18px;
+  font-style: italic;
+}
+.film-card-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.film-card-tag {
+  background: #fff;
+  border: 1px solid var(--bd);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 12px;
+  color: var(--t2);
+  letter-spacing: 1px;
+  transition: all .25s ease;
+}
+.film-card-tag:hover {
+  border-color: var(--a2);
+  color: var(--a2);
+  background: rgba(196,155,138,.04);
+}
+
+/* 深度解读增强 */
+.deep-dims { margin-bottom: 24px; }
+.deep-dim-item {
+  margin-bottom: 14px;
+  padding: 20px 22px;
+  background: #fbfaf6;
+  border-radius: 14px;
+  border-left: 4px solid var(--a2);
+  transition: all .3s ease;
+}
+.deep-dim-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 24px rgba(60,40,20,.06);
+}
+.deep-dim-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+.deep-dim-text {
+  font-size: 14px;
+  color: var(--t2);
+  line-height: 1.9;
+}
+
+/* 推荐作品增强 */
+.films { margin-bottom: 28px; }
+.film-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.film-chip {
+  background: #faf8f3;
+  border: 1px solid var(--bd);
+  border-radius: 22px;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: var(--t2);
+  letter-spacing: 1px;
+  transition: all .25s ease;
+}
+.film-chip:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+  background: rgba(122,154,112,.04);
+}
+
+/* 分割线增强 */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--bd) 20%, var(--bd) 80%, transparent);
+  margin: 32px 0;
+}
+
+/* 结果页整体滚动进入动画 */
+#result.card.fade-up {
+  animation: resultReveal .7s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes resultReveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 分享区域增强 */
+.share-section { margin-bottom: 24px; }
+.share-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.share-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1.5px solid var(--bd);
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--t2);
+  transition: all .3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 1px;
+}
+.share-btn:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(122,154,112,.12);
+}
+.share-btn.copy {
+  border-color: var(--a3);
+  color: var(--a3);
+}
+.share-btn.copy:hover {
+  background: rgba(196,164,90,.06);
+  box-shadow: 0 6px 20px rgba(196,164,90,.15);
+}
+
+.btn-restart {
+  display: block;
+  width: 100%;
+  background: #faf8f3;
+  border: 1.5px solid var(--bd);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--t2);
+  font-size: 14px;
+  cursor: pointer;
+  letter-spacing: 4px;
+  font-family: inherit;
+  transition: all .3s ease;
+  font-weight: 600;
+}
+.btn-restart:hover {
+  border-color: var(--t3);
+  color: var(--text);
+  background: #f6f3ec;
+  transform: translateY(-1px);
+}
+
+
+
+/* ===== 完善1: 滚动渐入动画 ===== */
+.reveal-section {
+  opacity: 0;
+  animation: revealIn .7s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes revealIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ===== 完善2: 导演主题色变量应用 ===== */
+#result.card {
+  --dc: #7a9a70;
+}
+/* 让段标题装饰线使用导演色 */
+.section-title::before,
+.section-title::after {
+  background: linear-gradient(to right, transparent, var(--dc, var(--bd)) 30%, var(--dc, var(--bd)) 70%, transparent);
+}
+/* 语录引号使用导演色 */
+.quote-text::before,
+.quote-text::after {
+  color: var(--dc, var(--a2));
+}
+/* 导演信左边框使用导演色 */
+.letter-card {
+  border-left: 3px solid var(--dc, var(--a2));
+}
+/* 分割线中心点使用导演色 */
+.divider {
+  background: linear-gradient(to right, transparent, var(--bd) 20%, var(--dc, var(--bd)) 50%, var(--bd) 80%, transparent);
+  height: 1.5px;
+}
+/* 维度填充条 */
+.dim-fill-e {
+  background: var(--dc, var(--ac)) !important;
+}
+/* 导演名字颜色 */
+.result-name-cn {
+  background: linear-gradient(180deg, var(--text) 0%, var(--dc, var(--t2)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* 类型标签边框 */
+.result-type-tag {
+  border-color: color-mix(in srgb, var(--dc, var(--bd)) 40%, transparent);
+  color: var(--dc, var(--t3));
+}
+
+/* ===== 完善3: 欢迎页电影胶片装饰 ===== */
+.film-strip {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  height: 18px;
+  align-items: center;
+}
+.film-strip::before,
+.film-strip::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--bd) 0px,
+    var(--bd) 4px,
+    transparent 4px,
+    transparent 10px
+  );
+  max-width: 80px;
+}
+.film-strip-dot {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--bd);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.film-strip-dot:nth-child(odd) {
+  background: var(--bd);
+}
+
+/* ===== 完善4: 导演签名/总结语区域(可互动) ===== */
+.signature-section {
+  text-align: center;
+  padding: 36px 20px 20px;
+  position: relative;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.signature-section::before {
+  content: '轻触此处';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--t3);
+  letter-spacing: 3px;
+  opacity: .5;
+  transition: opacity .5s ease;
+}
+.signature-section.played::before {
+  opacity: 0;
+}
+.signature-rule {
+  width: 40px;
+  height: 2px;
+  background: var(--dc, var(--a2));
+  margin: 0 auto 20px;
+  border-radius: 1px;
+  transition: width .6s ease;
+}
+.signature-section.played .signature-rule {
+  width: 80px;
+}
+.signature-closing {
+  font-size: 15px;
+  color: var(--t2);
+  line-height: 2.3;
+  font-style: italic;
+  margin-bottom: 20px;
+  min-height: 20px;
+  transition: color .6s ease;
+}
+.signature-closing .cursor-blink {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--a2);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursorBlink .7s step-end infinite;
+}
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.signature-name-wrap {
+  display: inline-block;
+  position: relative;
+}
+.signature-name {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: var(--dc, var(--text));
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  font-style: italic;
+  position: relative;
+  display: inline-block;
+}
+/* 签名墨迹效果 */
+.signature-name::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--dc, var(--a2));
+  transition: width 1.2s cubic-bezier(.22,.61,.36,1);
+}
+.signature-section.played .signature-name::after {
+  width: 100%;
+}
+/* 签名浮现动画 */
+.signature-name.animate-in {
+  animation: sigWrite .8s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes sigWrite {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.95);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+.signature-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--dc, var(--bd));
+  margin: 12px auto 4px;
+  transition: width .6s ease;
+}
+.signature-section.played .signature-divider {
+  width: 100px;
+}
+/* 重播提示 */
+.signature-replay-hint {
+  font-size: 10px;
+  color: var(--t3);
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity .5s ease;
+  margin-top: 6px;
+}
+.signature-section.played .signature-replay-hint {
+  opacity: .4;
+}
+
+/* ===== 完善6: 答题页过渡动效 ===== */
+#question.card {
+  transition: opacity .35s ease, transform .35s ease;
+}
+#question.card.fade-up {
+  animation: qFadeIn .45s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes qFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.opt-btn {
+  opacity: 0;
+  animation: optSlideIn .4s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.opt-btn:nth-child(1) { animation-delay: .08s; }
+.opt-btn:nth-child(2) { animation-delay: .16s; }
+
+@keyframes optSlideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== 完善7: 移动端增强 ===== */
+@media(max-width:600px) {
+  .app { padding: 20px 8px 60px; }
+  .card { padding: 28px 14px; border-radius: 12px; }
+  #result.card { padding: 28px 14px 36px; }
+  .hero-title { font-size: 24px; letter-spacing: 1px; }
+  .hero-desc { font-size: 14px; line-height: 1.9; }
+  .hero-meta { gap: 18px; }
+  .hero-meta-num { font-size: 24px; }
+  .q-text { font-size: 17px; line-height: 1.6; margin-bottom: 24px; }
+  .opt-btn { padding: 15px 14px; font-size: 14px; gap: 10px; }
+  .opt-letter { width: 28px; height: 28px; font-size: 12px; }
+  .result-emoji { font-size: 72px; }
+  .result-name-cn { font-size: 28px; letter-spacing: 3px; }
+  .result-name-en { font-size: 12px; }
+  .result-type-tag { font-size: 11px; letter-spacing: 3px; padding: 4px 14px; }
+  .quote-text { font-size: 16px; }
+  .quote-text::before, .quote-text::after { font-size: 40px; }
+  .section-title { font-size: 11px; letter-spacing: 4px; margin: 28px 0 16px; gap: 10px; }
+  .radar-wrap { padding: 16px 0; margin: 8px 0 20px; }
+  .dim-label-e { width: 48px; font-size: 10px; }
+  .dim-row-e { gap: 4px; margin-bottom: 10px; }
+  .dim-track-e { height: 22px; }
+  .dim-score { font-size: 10px; width: 20px; }
+  .memory-card { padding: 18px 14px; }
+  .memory-card-text { font-size: 13px; }
+  .neighbors { gap: 8px; }
+  .neighbor-chip { padding: 12px 14px; min-width: 80px; }
+  .neighbor-emoji { font-size: 24px; }
+  .neighbor-name { font-size: 12px; }
+  .letter-card { padding: 28px 16px 24px; }
+  .letter-body { font-size: 14px; line-height: 2; }
+  .film-card { padding: 24px 16px; }
+  .film-card-title { font-size: 22px; }
+  .deep-dim-item { padding: 14px 14px; }
+  .deep-dim-label { font-size: 12px; }
+  .deep-dim-text { font-size: 13px; }
+  .share-btns { flex-direction: column; }
+  .share-btn { min-width: auto; }
+  .btn-restart { padding: 14px; font-size: 13px; letter-spacing: 2px; }
+  .film-strip::before, .film-strip::after { max-width: 40px; }
+  .signature-name { font-size: 24px; letter-spacing: 5px; }
+  .signature-closing { font-size: 14px; line-height: 2.1; }
+  .signature-section { padding: 28px 14px 14px; }
+  .signature-section::before { font-size: 9px; }
+}
+
+@media(max-width:380px) {
+  .hero-title { font-size: 21px; }
+  .q-text { font-size: 15px; }
+  .opt-btn { padding: 12px 10px; font-size: 13px; }
+  .result-emoji { font-size: 60px; }
+  .result-name-cn { font-size: 24px; }
+  .dim-label-e { width: 40px; font-size: 9px; letter-spacing: 0; }
+  .neighbor-chip { min-width: 70px; padding: 10px 10px; }
+}
+
+
+
+/* ===== 付费钩子揭晓页 ===== */
+.teaser-card {
+  text-align: center;
+}
+.teaser-badge {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--a2);
+  border: 1px solid var(--a2);
+  margin-bottom: 20px;
+  background: rgba(196,155,138,.04);
+}
+.teaser-emoji {
+  font-size: 80px;
+  display: block;
+  margin-bottom: 12px;
+  animation: teaserFloat 2.5s ease-in-out infinite;
+}
+@keyframes teaserFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.teaser-match {
+  font-size: 14px;
+  color: var(--t3);
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+.teaser-name {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 6px;
+  margin-bottom: 16px;
+  background: linear-gradient(180deg, var(--text) 0%, var(--dc, var(--t2)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.teaser-name-hidden {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 10px;
+  margin-bottom: 16px;
+  color: var(--a2);
+  text-shadow: 0 0 20px rgba(196,155,138,.3);
+  animation: mysteryShimmer 2s ease-in-out infinite;
+  user-select: none;
+}
+@keyframes mysteryShimmer {
+  0%,100% { opacity: .6; text-shadow: 0 0 10px rgba(196,155,138,.2); }
+  50% { opacity: 1; text-shadow: 0 0 30px rgba(196,155,138,.5); }
+}
+.teaser-hook {
+  font-size: 16px;
+  color: var(--t2);
+  font-style: italic;
+  line-height: 2;
+  margin-bottom: 8px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.teaser-divider {
+  width: 50px;
+  height: 2px;
+  background: var(--dc, var(--a2));
+  margin: 20px auto;
+  border-radius: 1px;
+}
+
+/* 报告预览（模糊） */
+.teaser-preview {
+  position: relative;
+  background: #fbfaf6;
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 20px 16px;
+  margin: 0 auto 24px;
+  max-width: 440px;
+  overflow: hidden;
+}
+.teaser-preview-content {
+  filter: blur(6px);
+  opacity: .35;
+  pointer-events: none;
+  user-select: none;
+}
+.teaser-preview-content .section-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin: 10px 0 6px;
+}
+.teaser-preview-content .preview-line {
+  height: 8px;
+  background: var(--bd);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+.teaser-preview-content .preview-line.short { width: 65%; }
+.teaser-preview-content .preview-line.medium { width: 82%; }
+.teaser-preview-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(250,248,243,.3);
+}
+.teaser-preview-lock {
+  font-size: 28px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.12));
+}
+
+/* 价值列表 */
+.teaser-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.teaser-benefit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--t2);
+  padding: 6px 0;
+}
+.teaser-benefit-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* 支付 CTA */
+.btn-pay {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, var(--a2) 0%, #d4957a 100%);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 3px;
+  font-family: inherit;
+  box-shadow: 0 6px 24px rgba(196,155,138,.35);
+  transition: all .3s ease;
+  animation: payPulse 2s ease-in-out infinite;
+}
+@keyframes payPulse {
+  0%,100% { box-shadow: 0 6px 24px rgba(196,155,138,.35); }
+  50% { box-shadow: 0 8px 36px rgba(196,155,138,.55); transform: translateY(-1px); }
+}
+.btn-pay:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(196,155,138,.5);
+}
+.btn-pay:active {
+  transform: scale(.97);
+}
+.teaser-price {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: .85;
+  margin-left: 4px;
+  letter-spacing: 1px;
+}
+.teaser-guarantee {
+  text-align: center;
+  font-size: 10px;
+  color: var(--t3);
+  letter-spacing: 2px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.teaser-code-link {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: var(--t3);
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-top: 16px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  width: 100%;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.teaser-code-link:hover {
+  color: var(--t2);
+}
+
+/* ===== 支付弹窗 ===== */
+.pay-modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  backdrop-filter: blur(2px);
+}
+.pay-modal-mask.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.pay-modal-box {
+  background: #fff;
+  border-radius: 22px;
+  padding: 36px 28px 28px;
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 24px 72px rgba(0,0,0,.2);
+  position: relative;
+  animation: modalSlideUp .4s cubic-bezier(.22,.61,.36,1);
+}
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(40px) scale(.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.pay-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  color: var(--t3);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  line-height: 1;
+}
+.pay-modal-emoji {
+  font-size: 44px;
+  margin-bottom: 8px;
+}
+.pay-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: 2px;
+}
+.pay-modal-sub {
+  font-size: 12px;
+  color: var(--t3);
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+.pay-modal-price {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--a2);
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+.pay-modal-price sub {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--t3);
+}
+.pay-qr-wrap {
+  display: inline-block;
+  width: 180px;
+  height: 180px;
+  background: #faf8f3;
+  border: 2px solid var(--bd);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.pay-qr-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--t3);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.pay-qr-icon {
+  font-size: 52px;
+  margin-bottom: 8px;
+}
+.pay-modal-note {
+  font-size: 11px;
+  color: var(--t3);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.pay-modal-btn {
+  display: block;
+  width: 100%;
+  background: var(--ac);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-family: inherit;
+  margin-bottom: 10px;
+  transition: all .3s ease;
+}
+.pay-modal-btn:hover {
+  background: #6b8a61;
+  transform: translateY(-1px);
+}
+.pay-modal-btn.alt {
+  background: #fff;
+  color: var(--t2);
+  border: 1px solid var(--bd);
+}
+.pay-modal-btn.alt:hover {
+  border-color: var(--a2);
+  color: var(--a2);
+}
+.pay-code-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  font-family: monospace;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  background: #faf8f3;
+}
+.pay-code-input:focus {
+  outline: none;
+  border-color: var(--ac);
+}
+.pay-code-hint {
+  font-size: 10px;
+  color: var(--t3);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+/* ===== 支付成功动画 ===== */
+.pay-success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(250,248,243,.95);
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+.pay-success-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.pay-success-content {
+  text-align: center;
+}
+.pay-success-check {
+  font-size: 72px;
+  animation: successPop .5s cubic-bezier(.22,.61,.36,1);
+}
+@keyframes successPop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pay-success-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 12px;
+  letter-spacing: 2px;
+}
+.pay-success-sub {
+  font-size: 13px;
+  color: var(--t3);
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+@media(max-width:600px) {
+  .teaser-emoji { font-size: 64px; }
+  .teaser-name { font-size: 30px; letter-spacing: 4px; }
+  .teaser-name-hidden { font-size: 34px; letter-spacing: 8px; }
+  .teaser-hook { font-size: 14px; }
+  .btn-pay { font-size: 16px; padding: 16px; }
+  .pay-modal-box { padding: 28px 18px 22px; }
+  .pay-modal-price { font-size: 34px; }
+  .pay-qr-wrap { width: 150px; height: 150px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- 欢迎页 -->
+  <div class="card" id="welcome">
+        <!-- 电影胶片装饰 -->
+    <div class="film-strip">
+      <span class="film-strip-dot"></span>
+      <span class="film-strip-dot"></span>
+      <span class="film-strip-dot"></span>
+      <span class="film-strip-dot"></span>
+      <span class="film-strip-dot"></span>
+      <span class="film-strip-dot"></span>
+    </div>
+    <div class="hero-icon">🎬</div>
+    <h1 class="hero-title">你与哪位导演共享灵魂</h1>
+    <p class="hero-sub">SOUL · CINEMA · RESONANCE</p>
+    <div class="rule"></div>
+    <p class="hero-desc">
+      有些灵魂用镜头写作，有些眼睛在取景框后凝视人间。<br>
+      这里没有标准答案，只有你与某位电影作者之间<br>
+      一段尚未被命名的共振。<br>
+      <strong>闭上眼，诚实地回答——世界在你眼中，是什么质地？</strong>
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-num">32</div><div class="hero-meta-label">位导演</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-num">25</div><div class="hero-meta-label">道题目</div></div>
+      <div class="hero-meta-item"><div class="hero-meta-num">5</div><div class="hero-meta-label">个维度</div></div>
+    </div>
+    <button class="btn-primary" onclick="startTest()">开 始 探 索</button>
+  </div>
+
+  <!-- 题目页 -->
+  <div class="card hidden" id="question">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="bar" style="width:0%"></div></div>
+      <div class="progress-text" id="prog">1 / 25</div>
+    </div>
+    <div class="q-num" id="qnum">QUESTION 1</div>
+    <div class="q-text" id="qtxt"></div>
+    <div class="options" id="opts"></div>
+  </div>
+
+  <!-- 付费钩子揭晓页 -->
+  <div class="card hidden" id="teaser">
+    <div class="teaser-card">
+      <div class="teaser-badge">测 试 结 果</div>
+      <div class="teaser-emoji" id="teaserEmoji"></div>
+      <div class="teaser-match">你的灵魂深处，住着一位导演</div>
+      <div class="teaser-name" id="teaserNameHidden">???</div>
+      <div class="teaser-match">他是谁？答案就在下面</div>
+      <div class="teaser-hook" id="teaserHook"></div>
+      <div class="teaser-divider"></div>
+
+      <!-- 报告模糊预览 -->
+      <div class="teaser-preview">
+        <div class="teaser-preview-content">
+          <div class="section-title">五 维 图 谱</div>
+          <div class="preview-line"></div>
+          <div class="preview-line short"></div>
+          <div class="preview-line medium"></div>
+          <div class="preview-line short"></div>
+          <div class="preview-line"></div>
+          <div class="section-title">光 影 记 忆</div>
+          <div class="preview-line medium"></div>
+          <div class="preview-line short"></div>
+          <div class="section-title">导 演 寄 语</div>
+          <div class="preview-line"></div>
+          <div class="preview-line medium"></div>
+          <div class="preview-line short"></div>
+        </div>
+        <div class="teaser-preview-overlay">
+          <div class="teaser-preview-lock">🔐</div>
+        </div>
+      </div>
+
+      <!-- 价值列表 -->
+      <div class="teaser-benefits">
+        <div class="teaser-benefit"><span class="teaser-benefit-icon">✉️</span> 导演写给你的亲笔信</div>
+        <div class="teaser-benefit"><span class="teaser-benefit-icon">🎬</span> 一部只属于你的电影概念</div>
+        <div class="teaser-benefit"><span class="teaser-benefit-icon">🔍</span> 五维深度人格解读</div>
+        <div class="teaser-benefit"><span class="teaser-benefit-icon">🎞️</span> 完整导演档案与推荐作品</div>
+      </div>
+
+      <!-- CTA -->
+      <button class="btn-pay" onclick="openPayModal()">
+        💎 解锁完整报告 <span class="teaser-price">¥0.99</span>
+      </button>
+      <div class="teaser-guarantee">一次购买 · 永久查看 · 可反复测试</div>
+
+      <button class="teaser-code-link" onclick="openPayModal(true)">已购买？点此输入解锁码 →</button>
+    </div>
+  </div>
+
+  <!-- 结果页 -->
+  <div class="card hidden" id="result">
+    <!-- 导演结果头部 -->
+    <div class="result-header">
+      <div class="result-emoji" id="remoji"></div>
+      <div class="result-name-block">
+        <div class="result-name-cn" id="rname"></div>
+        <div class="result-name-en" id="ren"></div>
+        <div class="result-type-tag" id="rcode"></div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text" id="rquote"></div>
+        <div class="quote-source" id="rquoteCn"></div>
+      </div>
+    </div>
+    <p class="result-bio" id="rbio"></p>
+
+    <div class="reveal-section">
+    <!-- 五维图谱 -->
+    <div class="section-title">五 维 图 谱</div>
+    <div class="radar-wrap"><canvas class="radar-canvas" id="radar"></canvas></div>
+    <div id="dimBars"></div>
+
+    <div class="divider"></div>
+
+    </div><div class="reveal-section">
+    <!-- 光影记忆 -->
+    <div class="section-title">光 影 记 忆</div>
+    <div class="memory-cards" id="memoryCards"></div>
+
+    </div><div class="reveal-section">
+    <!-- 灵魂近邻 -->
+    <div class="section-title">灵 魂 近 邻</div>
+    <div class="neighbors" id="neighbors"></div>
+
+    </div>
+    <div class="divider"></div>
+
+    <div class="reveal-section">
+    <!-- 导演信 -->
+    <div class="section-title">导 演 寄 语</div>
+    <div class="letter-card" id="letterCard"></div>
+
+    </div><div class="reveal-section">
+    <!-- 你的电影 -->
+    <div class="section-title">你 的 电 影</div>
+    <div class="film-card" id="filmCard"></div>
+
+    </div><div class="reveal-section">
+    <!-- 深度维度 -->
+    <div class="section-title">深 度 解 读</div>
+    <div class="deep-dims" id="deepDims"></div>
+
+    </div><div class="reveal-section">
+    <!-- 推荐作品 -->
+    <div class="section-title">推 荐 作 品</div>
+    <div class="films"><div class="film-chips" id="fchips"></div></div>
+
+    </div>
+
+    <div class="signature-section" id="signatureSection" onclick="playSignature()">
+      <div class="signature-rule"></div>
+      <div class="signature-closing" id="signatureClosing"></div>
+      <div class="signature-name-wrap">
+        <div class="signature-name" id="signatureName"></div>
+      </div>
+      <div class="signature-divider"></div>
+      <div class="signature-replay-hint">再次轻触 · 重温寄语</div>
+    </div>
+
+    <!-- 分享 -->
+    <div class="share-section">
+      <div class="section-title">分 享 结 果</div>
+      <div class="share-btns">
+        <button class="share-btn copy" onclick="copyShare()">📋 复制分享文案</button>
+        <button class="share-btn" onclick="shareCard()">🖼️ 生成分享卡片</button>
+      </div>
+    </div>
+    <button class="btn-restart" onclick="restartTest()">重 新 探 索</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<canvas id="shareCanvas" style="display:none" width="600" height="900"></canvas>
+
+<script>
+// ============ 五维度 ============
+const DIMS=[
+  {key:'I',key2:'E',l:'内倾独处',r:'外倾连接',icon:'🧘'},
+  {key:'N',key2:'T',l:'直觉感受',r:'理性分析',icon:'🔮'},
+  {key:'D',key2:'P',l:'理想主义',r:'务实适应',icon:'🌅'},
+  {key:'S',key2:'X',l:'含蓄静谧',r:'外放热烈',icon:'🌊'},
+  {key:'H',key2:'F',l:'怀旧沉湎',r:'前瞻探索',icon:'⏳'}
+];
+const ALLK=DIMS.flatMap(d=>[d.key,d.key2]);
+
+// ============ 题目 25题 ============
+const Q=[
+  // D1: I vs E
+  {t:"一场尽兴的聚会散场后，你推开门走入夜色——心里的感受更接近？",A:"世界终于安静下来了，你需要独处来恢复能量",B:"余温还在，你渴望找个人再聊一会儿",ak:"I",bk:"E"},
+  {t:"关于独处，哪种说法更接近你的真实状态？",A:"独处是你主动选择的生活方式，是精神的自由",B:"你更喜欢身边有人，即使不说话也好",ak:"I",bk:"E"},
+  {t:"进入一个全然陌生的社交场合，你的本能反应是？",A:"先退到边缘，观察这个空间的温度和节奏",B:"主动找到有意思的人，开启一段未知的对话",ak:"I",bk:"E"},
+  {t:"面对一个重大的个人决定，你更倾向于怎么处理？",A:"独自深入思考，偶尔向最信任的人求证",B:"广泛听取不同人的意见，在讨论中厘清自己",ak:"I",bk:"E"},
+  {t:"你更认同哪一种生活状态？",A:"\"我的内心世界足够丰饶，不需要外界的喧嚣来填充\"",B:"\"人是群居的动物，最好的时刻往往发生在与他人的交汇中\"",ak:"I",bk:"E"},
+  // D2: N vs T
+  {t:"面对一个复杂模糊的局面，你更相信什么来指引自己？",A:"直觉，那种说不清但很确定的感受",B:"逻辑，一步步拆解分析后的判断",ak:"N",bk:"T"},
+  {t:"站在一幅画前，你最先被什么抓住？",A:"它唤起的那种难以名状的情绪和联想",B:"它的构图、色彩关系和背后的观念",ak:"N",bk:"T"},
+  {t:"做出一个重要选择时，什么更容易说服你？",A:"一个触动你的故事，或脑海中挥之不去的意象",B:"一份逻辑严密的论据，或清晰的数据支撑",ak:"N",bk:"T"},
+  {t:"你更倾向于怎样描述自己的思维习惯？",A:"跳跃的、比喻式的，像在黑暗中捕捉萤火虫",B:"线性的、结构化的，像在搭建一座建筑",ak:"N",bk:"T"},
+  {t:"朋友向你倾诉烦恼时，你的第一反应更接近？",A:"先感受他的情绪，与他的心境同频共振",B:"先理清问题的脉络，帮他找到出口",ak:"N",bk:"T"},
+  // D3: D vs P
+  {t:"对这个世界的看法，哪一种更接近你的底色？",A:"\"世界应该是怎样的\"——你心中始终有一张蓝图",B:"\"世界就是这样运转的\"——你选择理解并适应它",ak:"D",bk:"P"},
+  {t:"关于人生的意义感，你更偏向哪一种？",A:"人必须有某种超越日常的精神寄托，否则便是虚度",B:"意义不在远方，就在此时此刻的具体生活中",ak:"D",bk:"P"},
+  {t:"面对一个让你不满的社会现象，你的第一反应是？",A:"\"应该有人站出来改变这一切\"",B:"\"我能做的就是在能力范围内做好自己的事\"",ak:"D",bk:"P"},
+  {t:"选择职业道路时，什么在你心中分量更重？",A:"这件事是否让你感到自己正在做有价值的事情",B:"这份工作能否带来稳定的生活与可预期的未来",ak:"D",bk:"P"},
+  {t:"你对\"妥协\"这个词的情感反应更接近？",A:"隐隐的惋惜——妥协往往是理想的褪色",B:"平静的接纳——妥协是成年人必须习得的智慧",ak:"D",bk:"P"},
+  // D4: S vs X
+  {t:"当你真心在乎一个人时，你最自然的方式是？",A:"把深情藏在细节里——一顿饭、一次不动声色的陪伴",B:"直接告诉对方——你觉得爱是需要被明确感知和表达的",ak:"S",bk:"X"},
+  {t:"在公共场合看到令人动容的画面，你的反应是？",A:"内心翻涌，但表面上不动声色",B:"不介意被旁人看到你红了眼眶",ak:"S",bk:"X"},
+  {t:"你的社交媒体使用习惯更接近？",A:"偶尔发布，以图片和留白为主，话不说满",B:"乐于记录和分享，把瞬间的感受传递出去",ak:"S",bk:"X"},
+  {t:"与人发生分歧时，你倾向于？",A:"回避正面冲突，等情绪退潮后再沟通",B:"当面说清楚，坦诚比表面和平更重要",ak:"S",bk:"X"},
+  {t:"你更欣赏哪种表达的美感？",A:"\"言有尽而意无穷\"——留白是最高的表达",B:"\"不吐不快\"——真诚的倾泻自有它的力量",ak:"S",bk:"X"},
+  // D5: H vs F
+  {t:"翻到一张旧照片时，你通常会？",A:"沉浸其中很久，被那个时刻的气味和温度重新包裹",B:"微笑片刻，然后合上——你更关心眼前和明天",ak:"H",bk:"F"},
+  {t:"关于过去，哪种说法更击中你？",A:"\"所有的经历都沉淀为此刻的我，过去从不曾真正过去\"",B:"\"往事已矣，重要的永远是尚未到来的部分\"",ak:"H",bk:"F"},
+  {t:"面对生活中的变化，你的内心反应更接近？",A:"对熟悉的事物有深深的眷恋，变化让你感到某种失落",B:"拥抱变化，你相信新的可能性比旧的舒适区更值得期待",ak:"H",bk:"F"},
+  {t:"旅行的时候，你更享受哪一种体验？",A:"在一座有历史感的老城里慢慢走，每条巷子都在讲故事",B:"去一个充满未来感的陌生之地，感受全新的节奏和气息",ak:"H",bk:"F"},
+  {t:"做计划时，你更依赖什么来做判断？",A:"回顾以往的经验——走过的路是可靠的向导",B:"关注正在出现的趋势——你对新鲜事物保持敏锐",ak:"H",bk:"F"}
+];
+
+// ============ 32 位导演数据(增强版) ============
+// cl=特征色 qt=语录 ae=美学关键词
+const DIR={
+"INDSH":{n:"王家卫",e:"Wong Kar-wai",em:"🚬",cl:"#c41e3a",
+  qt:"「如果记忆也是一个罐头的话，我希望这罐罐头不会过期。」",qtCn:"——《重庆森林》",
+  ae:"霓虹灯下潮湿的孤独，时钟失准的夜晚，未寄出的情书在雨中发酵",
+  cr:"深夜是你灵感最浓的时刻；你偏爱在咖啡、音乐和无人打扰的寂静中让想法自己浮现",
+  b:"你的灵魂质地与王家卫如出一辙——对时间、记忆与错失有着近乎偏执的迷恋。你活在自己构建的情绪世界里，那里霓虹迷离、时钟失准、所有未寄出的情书都在雨中发酵。你不急于被理解，因为真正懂你的人会在那些留白里听见一切。",
+  f:["花样年华","重庆森林","春光乍泄","阿飞正传"]},
+"INDSF":{n:"是枝裕和",e:"Hirokazu Kore-eda",em:"🏠",cl:"#8b9a7e",
+  qt:"「生下孩子，就自然成为母亲了吗？」",qtCn:"——《小偷家族》",
+  ae:"日常的微光，家庭的静谧褶皱，一顿饭里的深情，未说出口的爱",
+  cr:"你最好的想法往往在生活中最不起眼的时刻浮现——洗碗时、散步时、看夕阳时",
+  b:"你是枝裕和式的观察者——在日常最不起眼的褶皱里发现诗意。一顿饭、一次沉默的对视、一段无言的陪伴，在你这里都是深情的载体。你不喜欢戏剧化冲突，真正重要的事发生在话语之间的空隙里。你的温柔安静但绵长。",
+  f:["步履不停","小偷家族","海街日记","如父如子"]},
+"INDXH":{n:"安德烈·塔可夫斯基",e:"Andrei Tarkovsky",em:"🕯️",cl:"#5d5d5d",
+  qt:"「诗歌是不可翻译的。」",qtCn:"——《乡愁》",
+  ae:"庄严的凝视，缓慢燃烧的烛火，时间的重量，信仰的回声",
+  cr:"你创作时需要一个安静到几乎神圣的空间，你在其中与永恒对话",
+  b:"你是塔可夫斯基的灵魂同行者——用影像雕刻时光，在缓慢的镜头里埋下对信仰、记忆与存在的追问。你为那些在深夜辗转反侧的人提供冥想的容器。你的内心深邃而庄严。",
+  f:["乡愁","潜行者","镜子","牺牲"]},
+"INDXF":{n:"阿彼察邦",e:"Apichatpong Weerasethakul",em:"🌿",cl:"#4a7c59",
+  qt:"「我只是想念你们。」",qtCn:"——《能召回前世的布米叔叔》",
+  ae:"丛林的呼吸，梦境与现实之间的薄雾，幽灵的温柔低语",
+  cr:"你在半梦半醒之间捕捉灵感，那些朦胧的、难以定义的东西最吸引你",
+  b:"你和阿彼察邦共享一种对现实边界的温柔僭越——梦境、记忆、幽灵与活人在你这里共享同一个空间。你更相信身体的感觉和丛林的呼吸，而非理性的解释。",
+  f:["能召回前世的布米叔叔","热带疾病","幻梦墓园","记忆"]},
+"INPSH":{n:"侯孝贤",e:"Hou Hsiao-hsien",em:"🏔️",cl:"#8b7355",
+  qt:"「一个人，没有同类。」",qtCn:"——《刺客聂隐娘》",
+  ae:"远山的沉默，午后长廊的光影，风吹过稻田的声音，历史的叹息",
+  cr:"你相信等待的力量，最好的东西往往在静默中自己浮现出来",
+  b:"你与侯孝贤一样，用沉静而悠长的凝视注视着世界。你不急于表达，只是把镜头放在那里，让时间、风和人物的呼吸自然流淌。在漫长的固定画面里，观众感受到关于存在本身的感动。",
+  f:["悲情城市","童年往事","刺客聂隐娘","恋恋风尘"]},
+"INPSF":{n:"李安",e:"Ang Lee",em:"🌊",cl:"#4a7c8b",
+  qt:"「我但愿我知道如何戒掉你。」",qtCn:"——《断背山》",
+  ae:"水面下的暗涌，温和外表下的炽热情感，东西方的诗意交汇",
+  cr:"你善于在不同世界之间找到平衡点，你的温柔本身就是一种力量",
+  b:"你拥有李安式的柔韧与深度——外表温和如水，内心却有熔岩般的情感强度。无论讲什么故事，你都在追问同一个命题：人在各种限制中如何安放自己的情感与欲望。",
+  f:["断背山","少年派的奇幻漂流","卧虎藏龙","色，戒"]},
+"INPXH":{n:"杨德昌",e:"Edward Yang",em:"🏙️",cl:"#3d3d5c",
+  qt:"「电影使人生延长了三倍。」",qtCn:"——《一一》",
+  ae:"都市的孤岛，玻璃幕墙后的心事，现代生活的精确解剖",
+  cr:"你对社会的观察敏锐而冷静，你的创作来自对周遭世界的不妥协审视",
+  b:"你是杨德昌式的城市解剖者——对现代社会的疏离、中产生活的空洞有着冷静到残忍的洞察。你不提供廉价的安慰，你用精密的结构将时代的病症一一呈现。",
+  f:["一一","牯岭街少年杀人事件","恐怖分子","青梅竹马"]},
+"INPXF":{n:"阿斯哈·法哈蒂",e:"Asghar Farhadi",em:"⚖️",cl:"#8b6914",
+  qt:"「我不想让我的孩子在这种环境下长大。」",qtCn:"——《一次别离》",
+  ae:"道德的灰色地带，人际关系的微妙裂痕，一个谎言引发的深渊",
+  cr:"你着迷于人性的复杂，你在道德的模糊地带找到最真实的戏剧",
+  b:"你与法哈蒂共享对道德灰色地带的感知——没有纯粹的好人与坏人，只有复杂的、在各自处境中做出选择的人。你将微小裂痕放大为深渊，让观众看到自己的影子。",
+  f:["一次别离","推销员","关于伊丽","过往"]},
+"ITDSH":{n:"安德烈·兹维亚金采夫",e:"Andrey Zvyagintsev",em:"🪨",cl:"#5a5a5a",
+  qt:"「所有的权力都来自上帝。」",qtCn:"——《利维坦》",
+  ae:"冷峻的寓言，沉默的审判，古典画般的凝重构图",
+  cr:"你用最少的语言表达最多的含义，克制是你的美学信仰",
+  b:"你是兹维亚金采夫式的冷峻寓言家——用精确的构图和克制的叙事解剖权力、腐败与人性的脆弱。你的影像有古典绘画的严谨，情感如暗流般汹涌。",
+  f:["利维坦","无爱可诉","回归","叶莲娜"]},
+"ITDSF":{n:"维姆·文德斯",e:"Wim Wenders",em:"🛤️",cl:"#6b8a9e",
+  qt:"「当孩子还是孩子的时候，他并不知道自己是孩子。」",qtCn:"——《柏林苍穹下》",
+  ae:"无尽的公路，天空的辽阔，旅途中的自我发现",
+  cr:"你在移动中思考，在路上找到灵感，空间的变化给你自由",
+  b:"你是文德斯式的漫游者——在路上、在途中、在两个地点之间才是真正自由的时刻。你的作品充满了对空间、距离和孤独的深刻感受。",
+  f:["德州巴黎","柏林苍穹下","公路之王","皮娜"]},
+"ITDXH":{n:"大卫·林奇",e:"David Lynch",em:"🦉",cl:"#7b3f5c",
+  qt:"「这是一个奇怪的世界，不是吗？」",qtCn:"——《蓝丝绒》",
+  ae:"甜美表象下的诡异暗流，红丝绒帷幕后的不可名状之物",
+  cr:"你的灵感来自潜意识的深海，那些不被承认的欲望是你最真实的素材",
+  b:"你与林奇一样着迷于日常之下的诡异暗流。最深的恐怖来自潜意识深处的欲望与恐惧。你在甜美的表面下埋藏不安，让观众在熟悉的场景中感受到不可名状的颤栗。",
+  f:["穆赫兰道","蓝丝绒","双峰","橡皮头"]},
+"ITDXF":{n:"查理·考夫曼",e:"Charlie Kaufman",em:"🧠",cl:"#8b7a6b",
+  qt:"「我只是一个在寻找内心平静的糟糕女孩。」",qtCn:"——《暖暖内含光》",
+  ae:"意识的迷宫，自我与他者的边界，在荒诞中开出的诗之花",
+  cr:"你的大脑从不停止对存在意义的追问，这种追问本身就是你的创作",
+  b:"你是考夫曼式的元叙事魔术师——对自我和意识进行永无止境的解构。你用近乎神经质的诚实面对焦虑与困惑，在荒诞中凿出动人的诗意。",
+  f:["暖暖内含光","改编剧本","纽约提喻法","我想结束这一切"]},
+"ITPSH":{n:"罗伊·安德森",e:"Roy Andersson",em:"🪟",cl:"#8a8a7a",
+  qt:"「很高兴听到你过得不错。」",qtCn:"——《寒枝雀静》",
+  ae:"灰调的荒诞，静止画面中的人生百态，绝望中的冷幽默",
+  cr:"你用最简洁的视觉语言表达最复杂的人类处境，极简即极繁",
+  b:"你是罗伊·安德森式的荒诞观察者——用极简的固定镜头和灰调画面捕捉人类存在的荒谬与悲凉。每个画面都是一幅精心构图的画作，用近乎绝望的幽默感讲述生命的终极真相。",
+  f:["寒枝雀静","二楼传来的歌声","你还活着","瑞典爱情故事"]},
+"ITPSF":{n:"迈克尔·哈内克",e:"Michael Haneke",em:"🔍",cl:"#4a4a4a",
+  qt:"「人生真美，如此漫长。」",qtCn:"——《爱》",
+  ae:"冷静的凝视，暴力的缺席与在场，中产阶级的精致伪装",
+  cr:"你拒绝粉饰和煽情，用最冷的方式传达最深的关怀",
+  b:"你是哈内克式的冷面诊断师——用精准到冷酷的镜头审视现代社会的暴力与冷漠。你不提供廉价的安慰，把问题直接摆在观众面前。冷峻背后是对人类处境的深切关怀。",
+  f:["爱","白丝带","隐藏摄像机","钢琴教师"]},
+"ITPXH":{n:"拉斯·冯·提尔",e:"Lars von Trier",em:"🩸",cl:"#8b1a1a",
+  qt:"「我已经看尽了一切。」",qtCn:"——《黑暗中的舞者》",
+  ae:"极端的挑衅，赤裸的人性深渊，在黑暗中寻找光的形状",
+  cr:"你不惧怕争议和不适，你的创作来自对舒适区的彻底拒绝",
+  b:"你是冯·提尔式的不妥协者——用极端方式逼迫观众面对最不舒适的真相。你的创作有近乎自毁的坦诚，不惧怕呈现人性深渊，因为只有在极端的黑暗中才能看清光的形状。",
+  f:["狗镇","黑暗中的舞者","反基督者","女性瘾者"]},
+"ITPXF":{n:"丹尼斯·维伦纽瓦",e:"Denis Villeneuve",em:"🌌",cl:"#3a5a6a",
+  qt:"「尽管预知了所有悲伤，我依然欣然前往。」",qtCn:"——《降临》",
+  ae:"宏大的沉静，宇宙尺度上的孤独，不可抗拒的命运潮汐",
+  cr:"你在宏大的框架中埋藏细腻的情感，大格局与小情感并存",
+  b:"你与维伦纽瓦共享一种宏大的沉静——在巨大的尺度上探讨身份、记忆与人性。在类型片的框架中埋下深刻的哲学命题，让商业与艺术达成优雅的平衡。",
+  f:["降临","银翼杀手2049","囚徒","沙丘"]},
+
+"ENDSH":{n:"宫崎骏",e:"Hayao Miyazaki",em:"🐉",cl:"#5a9a6a",
+  qt:"「曾经发生过的事情不可能忘记，只是暂时想不起来而已。」",qtCn:"——《千与千寻》",
+  ae:"飞翔的冲动，自然的呼吸，蒸汽与魔法交织的温暖世界",
+  cr:"你的灵感来自对自然和童年的深深眷恋，即使在暗处你也总能找到光",
+  b:"你是宫崎骏式的造梦者——用绚烂的想象力和对自然与人类的深切爱意，创造出让全世界动容的世界。即使在面对工业与自然的冲突时，你也始终相信善良的力量值得被讲述。",
+  f:["千与千寻","龙猫","幽灵公主","天空之城"]},
+"ENDSF":{n:"新海诚",e:"Makoto Shinkai",em:"☄️",cl:"#7aaac4",
+  qt:"「我好像一直在寻找着什么，寻找着某个人。」",qtCn:"——《你的名字。》",
+  ae:"耀眼的光线，错过的电车，黄昏时刻穿越时空的思念",
+  cr:"你对距离和时间的感受力极强，那些关于错过与重逢的故事是你最自然的表达",
+  b:"你是新海诚式的浪漫主义者——对距离、错过与少年心事有着偏执的敏感。你的世界充满耀眼的光线和黄昏时刻的思念。那些最柔软的瞬间值得被珍视和放大。",
+  f:["你的名字。","天气之子","秒速五厘米","言叶之庭"]},
+"ENDXH":{n:"让-皮埃尔·热内",e:"Jean-Pierre Jeunet",em:"🎪",cl:"#c49b5a",
+  qt:"「没有你，良辰美景更与何人说。」",qtCn:"——《天使爱美丽》",
+  ae:"奇妙的童话感，精致古怪的古董店，暖色调的寓言",
+  cr:"你眼中的世界充满古怪的细节和温暖的巧合，你擅长把平凡变魔法",
+  b:"你与热内共享一种奇妙的童话感——世界是一个充满古怪细节和温暖巧合的地方。你用丰富的视觉想象力和幽默感将日常涂抹成暖色调的寓言。",
+  f:["天使爱美丽","黑店狂想曲","漫长的婚约","童梦失魂夜"]},
+"ENDXF":{n:"米歇尔·贡德里",e:"Michel Gondry",em:"🎠",cl:"#c48a5a",
+  qt:"「用这台机器，你可以回到过去一秒钟。」",qtCn:"——《科学睡眠》",
+  ae:"手工感的魔法，纸板与线绳搭建的梦境，孩童般的好奇心",
+  cr:"你喜欢用双手创造魔法，不相信冰冷的技术，只相信热情和巧思",
+  b:"你是贡德里的同路人——用孩子般的好奇心和手工感的想象力构建奇妙世界。你的创作中有一种天真而不幼稚的品质，让人重新相信想象力的力量。",
+  f:["科学睡眠","王牌制片家","泡沫人生","青蜂侠"]},
+"ENPSH":{n:"阿方索·卡隆",e:"Alfonso Cuarón",em:"🌍",cl:"#5a7a8a",
+  qt:"「我们女人，总是孤单的。」",qtCn:"——《罗马》",
+  ae:"宏大叙事中的人文温度，童年记忆的光晕，宇宙中的孤独回响",
+  cr:"你擅长在巨大的尺度中找到人性的微小光芒，从小处见大世界",
+  b:"你是卡隆式的世界公民——在不同类型和尺度之间自由穿行，但始终保有一种深沉的人文关怀。在宏大的格局中找到人与人之间最微妙的连接。",
+  f:["罗马","地心引力","人类之子","你妈妈也一样"]},
+"ENPSF":{n:"斯派克·琼斯",e:"Spike Jonze",em:"🤖",cl:"#9b8aa0",
+  qt:"「过去只是我们讲给自己听的一个故事罢了。」",qtCn:"——《她》",
+  ae:"温柔的异类，对孤独与连接的全新定义，轻盈的忧郁",
+  cr:"你能在看似荒诞的设定中找到最深层的情感真实，让科技也染上温度",
+  b:"你是斯派克·琼斯式的温柔异类——对孤独与爱的本质有着格外细腻的感知。在荒诞的设定中找到情感真实，作品有一种轻盈的忧郁，让人微笑的同时感到心被捏了一下。",
+  f:["她","成为约翰·马尔科维奇","野兽家园","改编剧本"]},
+"ENPXH":{n:"埃米尔·库斯图里卡",e:"Emir Kusturica",em:"🎺",cl:"#c46a3a",
+  qt:"「从前，有一个国家，它的名字叫南斯拉夫。」",qtCn:"——《地下》",
+  ae:"喧闹的铜管乐，动物与人共舞的狂欢，将痛苦酿成欢乐的酒",
+  cr:"你用生命力和音乐来对抗世界的荒诞，让你的创作像一场永不停歇的庆典",
+  b:"你是库斯图里卡式的狂欢者——用喧嚣的音乐和蓬勃的生命力将世界的痛苦酿成欢乐的酒。作品中充满了对土地和边缘人物的深情，粗粝而热烈。",
+  f:["地下","黑猫白猫","流浪者之歌","生命是个奇迹"]},
+"ENPXF":{n:"韦斯·安德森",e:"Wes Anderson",em:"🎀",cl:"#c49b8a",
+  qt:"「在这个野蛮的屠宰场里，还是有些文明的微光存在。」",qtCn:"——《布达佩斯大饭店》",
+  ae:"完美对称的构图，粉彩色调的世界，精致如玩偶屋的秩序之美",
+  cr:"你从秩序和细节中获得安全感，你的美学本身就是一种对混乱世界的温柔抵抗",
+  b:"你是韦斯·安德森的灵魂知音——痴迷于对称、色彩和精致的细节。连忧伤都是粉色的。你用温柔而奇特的幽默感包裹关于孤独和归属的深刻主题。秩序中的温情，克制中的浪漫。",
+  f:["布达佩斯大饭店","月升王国","犬之岛","天才一族"]},
+
+"ETDSH":{n:"西奥·安哲罗普洛斯",e:"Theo Angelopoulos",em:"🏛️",cl:"#7a7a6a",
+  qt:"「明天会持续多久？」",qtCn:"——《永恒和一日》",
+  ae:"史诗的庄严，雾气中的国境线，历史与神话交汇的缓慢长镜",
+  cr:"你的创作沉静而庄严，像一首写给一个时代和一个民族的挽歌",
+  b:"你是安哲罗普洛斯式的史诗诗人——用缓慢而庄严的长镜头在历史、神话与当下之间架起桥梁。你的创作有深沉的悲悯，对个体命运投以长久的凝视。",
+  f:["尤利西斯的凝视","永恒和一日","雾中风景","流浪艺人"]},
+"ETDSF":{n:"肯·洛奇",e:"Ken Loach",em:"✊",cl:"#8b5a3a",
+  qt:"「我不是一个数字，我是一个人。」",qtCn:"——《我是布莱克》",
+  ae:"朴素的力量，工人阶级的真实面孔，对社会正义的执着信念",
+  cr:"你的创作来自对不公的愤怒和对弱者的共情，朴素是你最锋利的武器",
+  b:"你是肯·洛奇式的社会良心——用坚定而朴素的镜头对准被遗忘的人群。你对社会正义有执着的信念，不追求华丽的技巧，因为故事本身的力量已经足够。",
+  f:["我是布莱克","风吹麦浪","对不起我们错过了你","土地与自由"]},
+"ETDXH":{n:"佩德罗·阿莫多瓦",e:"Pedro Almodóvar",em:"💃",cl:"#c4203a",
+  qt:"「一个人越接近她梦想中的样子，她就越真实。」",qtCn:"——《关于我母亲的一切》",
+  ae:"浓烈的红色，炽热的情感，对女性命运的深情注视",
+  cr:"你用色彩和情感作为武器，你的创作是生命力本身的颂歌",
+  b:"你是阿莫多瓦式的色彩大师——用大胆的红色和炽热的情感创造出独属于你的视觉宇宙。你的作品是对生命力的颂歌，让那些边缘和被忽视的人被看见、被理解。",
+  f:["关于我母亲的一切","痛苦与荣耀","对她说","回归"]},
+"ETDXF":{n:"昆汀·塔伦蒂诺",e:"Quentin Tarantino",em:"🔫",cl:"#c4a020",
+  qt:"「正义之路，被暴虐之恶人包围……」",qtCn:"——《低俗小说》",
+  ae:"爵士乐般的叙事节奏，反常规的结构，将低俗炼成高级的流行艺术",
+  cr:"你像一个DJ一样混搭风格和类型，热情是你最强大的创作燃料",
+  b:"你是昆汀式的叙事浪人——把类型片当积木拆解重组，用密集的对话和反常规的结构创造独一无二的节奏感。把低俗的素材炼成高级的流行艺术品，充满对电影史的热爱。",
+  f:["低俗小说","杀死比尔","无耻混蛋","被解救的姜戈"]},
+
+"ETPSH":{n:"克林特·伊斯特伍德",e:"Clint Eastwood",em:"🤠",cl:"#8b734b",
+  qt:"「我只有你了，弗兰基。」",qtCn:"——《百万美元宝贝》",
+  ae:"硬朗的西部剪影，沉默的英雄，对暴力与救赎的深沉凝视",
+  cr:"你不玩花活，用最简练的方式讲述最沉重的故事，沉默胜过千言万语",
+  b:"你是伊斯特伍德式的老派讲述者——不炫技巧，用最简练的叙事将沉重主题交付观众。你对英雄主义和救赎有复杂而深沉的理解，硬朗外壳之下是对人性最本质的追问。",
+  f:["百万美元宝贝","不可饶恕","廊桥遗梦","硫磺岛的来信"]},
+"ETPSF":{n:"克里斯托弗·诺兰",e:"Christopher Nolan",em:"⏳",cl:"#4a6a8a",
+  qt:"「我们曾经仰望星空，思索我们在宇宙中的位置。现在我们只低头担心在泥土中的位置。」",qtCn:"——《星际穿越》",
+  ae:"精密的时间迷宫，理性与情感的天平，高概念中的深情内核",
+  cr:"你痴迷于结构和逻辑，但从不忽视情感——理性是你表达感性的独特方式",
+  b:"你与诺兰共享同一个思维频率——对时间、记忆和认知的边界有无穷的好奇心。搭建精密而优雅的叙事迷宫，用理性的框架包裹感性的内核，在作品中达成罕见的平衡。",
+  f:["盗梦空间","星际穿越","记忆碎片","致命魔术"]},
+"ETPXH":{n:"大卫·芬奇",e:"David Fincher",em:"🔪",cl:"#3a3a3a",
+  qt:"「搏击俱乐部的第一条规则：你不能谈论搏击俱乐部。」",qtCn:"——《搏击俱乐部》",
+  ae:"冷峻的完美主义，黑暗中的异样美感，每一帧都经过精密计算",
+  cr:"你对细节有近乎偏执的追求，黑暗不是你沉溺的对象而是揭示真相的画布",
+  b:"你与芬奇一样，对人性暗面和细节的精确性有近乎偏执的追求。每一帧画面都经过精密计算，冷峻中透出异样的美感。黑暗是你的画布，用来揭示真相而非沉溺其中。",
+  f:["搏击俱乐部","七宗罪","社交网络","消失的爱人"]},
+"ETPXF":{n:"斯坦利·库布里克",e:"Stanley Kubrick",em:"🎯",cl:"#2a3a4a",
+  qt:"「我很抱歉，戴夫。恐怕我不能那样做。」",qtCn:"——《2001太空漫游》",
+  ae:"冷峻的智性，精密的控制力，对人类文明全维度的深刻审视",
+  cr:"你相信伟大的艺术需要绝对的投入和不妥协的标准，完美主义不是冷漠而是最高的敬意",
+  b:"你是库布里克的智性继承者——对每一个镜头有近乎完美的控制欲，对人类文明的各个维度进行冷峻而深刻的审视。从史前暴力到未来科技，你的作品像精心设计的迷宫。伟大的艺术不容将就。",
+  f:["2001太空漫游","发条橙","闪灵","奇爱博士"]},
+
+"SecretA":{n:"神秘导演",e:"Mystery Type",em:"🎭",cl:"#9b8aba",
+  qt:"「你是一种尚未被命名的诗。」",qtCn:"——属于你的电影",
+  ae:"独一无二的光谱，不被定义的灵魂，在所有分类之外自成一派",
+  cr:"你的灵感来源独特而私密，不需被理解，只需被诚实对待",
+  b:"你的人格组合极为罕见。你不容易被归类，是一种微妙的混合体——同时具有冷静的分析力和深沉的情感、务实的处世态度和不易察觉的理想主义底色。你的故事尚待书写。",
+  f:["你的故事尚待书写","或许你就是那位导演"]}
+};
+
+// ============ 模板引擎：根据五维分数生成个性化文本 ============
+function buildAesthetic(scores,code){
+  const parts=[];
+  const d=DIMS;
+  const dominant=d.map(dd=>scores[dd.key]>=scores[dd.key2]?dd.key:dd.key2);
+  // 每个维度选主导极的文本
+  const texts={
+    I:"你偏爱独处的沉静，内心的风景比外界的喧嚣更让你着迷",
+    E:"你从人与人的交汇中获得能量，世界在你眼中是一场盛大的相遇",
+    N:"直觉是你的北极星——你信任那些说不清但无比确定的感受",
+    T:"理性是你的灯塔——你用清晰的思维照亮复杂世界的暗角",
+    D:"你仰望星空，心中始终保存着一幅关于'世界应该是怎样'的蓝图",
+    P:"你脚踏实地，在具体而真实的生活中找到了最可靠的意义",
+    S:"你的情感如静水深流——表面波澜不惊，深处暗涌万千",
+    X:"你的情感如烈火烹油——你不惧怕热烈地活着，坦荡地表达",
+    H:"过去是你永恒的灵感源泉——那些走过的路、爱过的人，从不曾真正离去",
+    F:"未来是你永不熄灭的火把——你对未知充满好奇，对变化张开双臂"
+  };
+  dominant.forEach(k=>{if(texts[k])parts.push(texts[k])});
+  return parts.join('。<br>')+'。';
+}
+
+function buildCreative(scores,code){
+  const dominant=DIMS.map(d=>scores[d.key]>=scores[d.key2]?d.key:d.key2);
+  const texts={
+    I:"在无人打扰的深夜里，你的灵感如泉水般自然涌现",
+    E:"在与他人的交谈和碰撞中，你找到最鲜活的创作冲动",
+    N:"你信任灵光一闪的瞬间，那些不请自来的意象是你最好的素材",
+    T:"你在清晰的框架和严密的逻辑中找到自由表达的路径",
+    D:"你被一种'必须如此'的内在使命感推动着去创造",
+    P:"你在解决具体问题的过程中找到创造的乐趣和满足",
+    S:"你最好的表达往往在沉默之后——酝酿越久，力量越深",
+    X:"你相信即时的、真诚的倾泻比精雕细琢更有生命力",
+    H:"你的创作常常是对过往的一次回望——在记忆中寻找当下的答案",
+    F:"你的创作面向未来——你好奇尚未被讲述的故事，未被探索的形式"
+  };
+  const parts=dominant.map(k=>texts[k]).filter(Boolean);
+  return parts.slice(0,4).join('。<br>')+'。';
+}
+
+// ============ 寻找灵魂近邻 (Manhattan距离) ============
+function findNeighbors(myCode,myScores){
+  const codes=Object.keys(DIR).filter(c=>c!==myCode&&c!=='SecretA');
+  const myVec=DIMS.flatMap(d=>[scores[d.key],scores[d.key2]]);
+  const ranked=codes.map(code=>{
+    const d=DIR[code];if(!d)return null;
+    // 用各维度的偏好近似距离
+    const theirCode=code;
+    let dist=0;
+    for(let i=0;i<5;i++){
+      if(myCode[i]!==theirCode[i])dist++;
+    }
+    return{code,dist,name:d.n,en:d.e,em:d.em};
+  }).filter(Boolean).sort((a,b)=>a.dist-b.dist);
+  return ranked.slice(0,3);
+}
+
+// ============ 雷达图(高清版，支持retina) ============
+function drawRadar(scores){
+  const canvas=document.getElementById('radar');
+  if(!canvas)return;
+  const dpr=window.devicePixelRatio||1;
+  const size=280;
+  canvas.width=size*dpr;canvas.height=size*dpr;
+  canvas.style.width=size+'px';canvas.style.height=size+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const cx=140,cy=140,r=100;
+  ctx.clearRect(0,0,size,size);
+  // 背景5层网格
+  [0.2,0.4,0.6,0.8,1].forEach(level=>{
+    ctx.beginPath();
+    for(let i=0;i<5;i++){
+      const a=(-Math.PI/2)+(i/5)*Math.PI*2;
+      const x=cx+Math.cos(a)*r*level, y=cy+Math.sin(a)*r*level;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle='#e8e0d5';ctx.lineWidth=1;ctx.stroke();
+  });
+  // 5条轴
+  for(let i=0;i<5;i++){
+    const a=(-Math.PI/2)+(i/5)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(a)*r, cy+Math.sin(a)*r);
+    ctx.strokeStyle='#e0d8cc';ctx.lineWidth=1;ctx.stroke();
+    // 轴标签(用图标)
+    const lx=cx+Math.cos(a)*(r+28), ly=cy+Math.sin(a)*(r+28);
+    ctx.fillStyle='#9c8b70';ctx.font='13px "Noto Serif SC",serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(DIMS[i].icon, lx, ly-6);
+    ctx.fillStyle='#b0a590';ctx.font='9px "Noto Serif SC",serif';
+    const lbl=DIMS[i].l.length+DIMS[i].r.length<8?DIMS[i].l+'/'+DIMS[i].r:DIMS[i].l.slice(0,2)+'/'+DIMS[i].r.slice(0,2);
+    ctx.fillText(lbl,lx,ly+8);
+  }
+  // 中心点标签
+  ctx.fillStyle='#d0c8b8';ctx.font='9px "Noto Serif SC",serif';ctx.textAlign='center';
+  ctx.fillText('你',cx,cy);
+  // 数据多边形
+  ctx.beginPath();
+  for(let i=0;i<5;i++){
+    const t=scores[DIMS[i].key]+scores[DIMS[i].key2];
+    const ratio=t>0?scores[DIMS[i].key2]/t:0.5;
+    const a=(-Math.PI/2)+(i/5)*Math.PI*2;
+    const x=cx+Math.cos(a)*r*ratio, y=cy+Math.sin(a)*r*ratio;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle='rgba(196,155,138,0.18)';ctx.fill();
+  ctx.strokeStyle='#c49b8a';ctx.lineWidth=2.5;ctx.stroke();
+  // 数据点
+  for(let i=0;i<5;i++){
+    const t=scores[DIMS[i].key]+scores[DIMS[i].key2];
+    const ratio=t>0?scores[DIMS[i].key2]/t:0.5;
+    const a=(-Math.PI/2)+(i/5)*Math.PI*2;
+    const x=cx+Math.cos(a)*r*ratio, y=cy+Math.sin(a)*r*ratio;
+    ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);
+    ctx.fillStyle='#fff';ctx.fill();
+    ctx.strokeStyle='#c49b8a';ctx.lineWidth=2.5;ctx.stroke();
+  }
+}
+
+// ============ 状态 ============
+let cur=0,scores={},rd=null;
+
+function startTest(){
+  cur=0;scores={};ALLK.forEach(k=>scores[k]=0);
+  shuffle(Q);
+  // 如果已购买，标记以便跳过 teaser
+  window._skipTeaser=isPurchased();
+  show('question');renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}}
+function show(id){
+  ['welcome','question','teaser','result'].forEach(p=>{
+    const el=document.getElementById(p);
+    if(el)el.classList[p===id?'remove':'add']('hidden');
+  });
+  const el=document.getElementById(id);if(el)el.classList.add('fade-up');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderQ(){
+  const q=Q[cur];
+  document.getElementById('qnum').textContent=`QUESTION ${cur+1}`;
+  document.getElementById('qtxt').textContent=q.t;
+  document.getElementById('bar').style.width=`${(cur/25)*100}%`;
+  document.getElementById('prog').textContent=`${cur+1} / 25`;
+  document.getElementById('opts').innerHTML=`
+    <button class="opt-btn" onclick="answer('A')"><span class="opt-letter">A</span> ${q.A}</button>
+    <button class="opt-btn" onclick="answer('B')"><span class="opt-letter">B</span> ${q.B}</button>`;
+}
+function answer(ch){
+  const q=Q[cur];scores[ch==='A'?q.ak:q.bk]++;
+  if(cur<24){
+    cur++;
+    const qCard=document.getElementById('question');
+    qCard.classList.remove('fade-up');
+    void qCard.offsetWidth;
+    qCard.classList.add('fade-up');
+    renderQ();
+  }else{
+    if(window._skipTeaser){
+      showResult();
+    }else{
+      showTeaser();
+    }
+  }
+}
+
+
+// ============ 付费钩子揭晓页 ============
+let _teaserDirector=null,_teaserCode='',_teaserCl='';
+function showTeaser(){
+  const code=DIMS.map(d=>scores[d.key]>=scores[d.key2]?d.key:d.key2).join('');
+  const d=resolveDir(code);
+  const cl=d.cl||'#7a9a70';
+  _teaserDirector=d;_teaserCode=code;_teaserCl=cl;
+
+  // 设置导演主题色
+  document.getElementById('teaser').style.setProperty('--dc',cl);
+
+  // 填充揭晓信息
+  document.getElementById('teaserEmoji').textContent=d.em;
+  // 导演名字保密——付费后才能看到
+
+  // 根据导演生成钩子文案
+  const hooks={
+    '王家卫':'「每个记忆都是潮湿的，包括你此刻的期待。」',
+    '是枝裕和':'「有些答案，藏在一杯茶的温度和一次沉默的对视里。」',
+    '李安':'「你的内心深处，有一个连你自己都未曾完全了解的故事。」',
+    '宫崎骏':'「起风了。你心中的那个孩子，正在呼唤一个名字。」',
+    '韦斯·安德森':'「秩序和美感是你对抗世界的武器——而你即将看到自己的镜像。」',
+    '诺兰':'「时间是你最着迷的谜题。现在，谜底就在下面。」',
+    '库布里克':'「你对完美的追求，即将在这里找到它的名字。」',
+    '大卫·芬奇':'「你看见别人看不见的细节。即将揭晓的——是你自己的暗面。」',
+  };
+  const hook=hooks[d.n]||'「你与某位电影作者之间，有一段尚未被命名的共振。它就在这里。」';
+  document.getElementById('teaserHook').textContent=hook;
+
+  show('teaser');
+}
+
+// ============ 支付流程 ============
+const UNLOCK_CODES=['DIRECTOR25','CINEMA25','SOULMATE','FILMMAKER','AUTEUR25'];
+let _codeMode=false;
+
+function openPayModal(codeMode){
+  _codeMode=!!codeMode;
+  const mask=document.getElementById('payModalMask');
+  const title=document.getElementById('payModalTitle');
+  const qrWrap=document.getElementById('payQrWrap');
+  const simBtn=document.getElementById('paySimBtn');
+  const codeToggle=document.getElementById('payCodeToggle');
+  const codeArea=document.getElementById('codeInputArea');
+
+  if(_codeMode){
+    title.textContent='输入解锁码';
+    qrWrap.style.display='none';
+    simBtn.style.display='none';
+    codeToggle.style.display='none';
+    codeArea.style.display='block';
+  }else{
+    title.textContent='解锁完整人格报告';
+    qrWrap.style.display='';
+    simBtn.style.display='';
+    codeToggle.style.display='';
+    codeArea.style.display='none';
+    document.getElementById('unlockCodeInput').value='';
+  }
+  mask.classList.add('show');
+}
+
+function closePayModal(){
+  document.getElementById('payModalMask').classList.remove('show');
+}
+
+function toggleCodeInput(){
+  _codeMode=!_codeMode;
+  openPayModal(_codeMode);
+}
+
+function simulatePay(){
+  // 模拟支付成功（接入 PayJS 后替换此处）
+  const simBtn=document.getElementById('paySimBtn');
+  simBtn.textContent='⏳ 处理中…';
+  simBtn.disabled=true;
+  simBtn.style.opacity='.6';
+
+  setTimeout(()=>{
+    closePayModal();
+    showPaySuccess();
+  },1500);
+}
+
+function verifyUnlockCode(){
+  const input=document.getElementById('unlockCodeInput').value.trim().toUpperCase();
+  if(UNLOCK_CODES.includes(input)){
+    closePayModal();
+    showPaySuccess();
+  }else{
+    const inputEl=document.getElementById('unlockCodeInput');
+    inputEl.style.borderColor='#c41e3a';
+    inputEl.style.background='#fff5f5';
+    inputEl.value='';
+    inputEl.placeholder='解锁码无效，请重试';
+    setTimeout(()=>{
+      inputEl.style.borderColor='';
+      inputEl.style.background='';
+      inputEl.placeholder='请输入解锁码';
+    },1500);
+  }
+}
+
+function showPaySuccess(){
+  const overlay=document.getElementById('paySuccess');
+  overlay.classList.add('show');
+
+  // 标记已购买
+  markPurchased();
+
+  setTimeout(()=>{
+    overlay.classList.remove('show');
+    showResult();
+  },1800);
+}
+
+// ============ 购买状态持久化 ============
+const PURCHASE_KEY='director_test_purchased_v2';
+function isPurchased(){
+  try{
+    return localStorage.getItem(PURCHASE_KEY)==='1';
+  }catch(e){return false;}
+}
+function markPurchased(){
+  try{
+    localStorage.setItem(PURCHASE_KEY,'1');
+  }catch(e){}
+}
+
+// ============ 结果渲染 ============
+function showResult(){
+  const code=DIMS.map(d=>scores[d.key]>=scores[d.key2]?d.key:d.key2).join('');
+  const d=resolveDir(code);
+  const cl=d.cl||'#7a9a70';
+  // 设置导演主题色 CSS 变量
+  document.getElementById('result').style.setProperty('--dc',cl);
+  // 标记已购买（确保从 teaser 过来的是付费用户）
+  markPurchased();
+  rd={code,name:d.n,en:d.e,emoji:d.em,bio:d.b,films:d.f,color:cl,qt:d.qt,qtCn:d.qtCn};
+
+  // --- 导演头部信息 ---
+  document.getElementById('remoji').textContent=d.em;
+  document.getElementById('rquote').textContent=d.qt;
+  document.getElementById('rquoteCn').textContent=d.qtCn||'';
+  document.getElementById('rname').textContent=d.n;
+  document.getElementById('ren').textContent=d.e;
+  const rc=document.getElementById('rcode');
+  rc.textContent=code;rc.style.color=cl;rc.style.borderColor=cl+'33';
+  document.getElementById('rbio').textContent=d.b;
+
+  // 雷达图稍后绘制(需要先让 result card 可见)
+
+  // --- 维度条(增强版) ---
+  let dimHTML='';
+  DIMS.forEach(dd=>{
+    const t=scores[dd.key]+scores[dd.key2];
+    const pctL=t>0?Math.round((scores[dd.key]/t)*100):50;
+    const pctR=100-pctL;
+    const winner=pctL>=pctR?dd.key:dd.key2;
+    const winnerLabel=pctL>=pctR?dd.l:dd.r;
+    dimHTML+=`
+      <div class="dim-row-e">
+        <span class="dim-label-e r">${dd.l}</span>
+        <div class="dim-track-e">
+          <div class="dim-fill-e" style="width:${pctL}%;background:${cl};opacity:${pctL>=pctR?0.9:0.45}">${pctL>=50?scores[dd.key]:''}</div>
+        </div>
+        <span class="dim-score">${scores[dd.key]}</span>
+        <span class="dim-score">${scores[dd.key2]}</span>
+        <div class="dim-track-e">
+          <div class="dim-fill-e" style="width:${pctR}%;background:${cl};opacity:${pctR>pctL?0.9:0.45};justify-content:flex-start;padding-left:10px;padding-right:0">${pctR>50?scores[dd.key2]:''}</div>
+        </div>
+        <span class="dim-label-e l">${dd.r}</span>
+      </div>`;
+  });
+  document.getElementById('dimBars').innerHTML=dimHTML;
+
+  // --- 光影记忆(三张独立卡片) ---
+  document.getElementById('memoryCards').innerHTML=`
+    <div class="memory-card keywords">
+      <div class="memory-card-icon">🎞️</div>
+      <div class="memory-card-label">${d.n} 的影像质地</div>
+      <div class="memory-card-text">${d.ae}</div>
+    </div>
+    <div class="memory-card aesthetic">
+      <div class="memory-card-icon">👁️</div>
+      <div class="memory-card-label">你的审美感知</div>
+      <div class="memory-card-text">${buildAesthetic(scores,code)}</div>
+    </div>
+    <div class="memory-card inspire">
+      <div class="memory-card-icon">💡</div>
+      <div class="memory-card-label">灵感降临的时刻</div>
+      <div class="memory-card-text">${buildCreative(scores,code)}</div>
+    </div>`;
+
+  // --- 灵魂近邻 ---
+  const neighbors=findNeighbors(code,scores);
+  let nHTML='';
+  neighbors.forEach(nb=>{
+    nHTML+=`<div class="neighbor-chip">
+      <div class="neighbor-emoji">${nb.em}</div>
+      <div class="neighbor-name">${nb.name}</div>
+      <div class="neighbor-en">${nb.en}</div>
+      <div class="neighbor-sim">相似度 ${100-nb.dist*20}%</div>
+    </div>`;
+  });
+  document.getElementById('neighbors').innerHTML=nHTML;
+
+  // --- 推荐作品(直接展示) ---
+  let fHTML='';
+  d.f.forEach(f=>fHTML+=`<span class="film-chip">《${f}》</span>`);
+  document.getElementById('fchips').innerHTML=fHTML;
+
+
+  // --- 生成完整报告内容 ---
+  const letter=generateLetter(d,code,scores);
+  const film=generateFilm(d,code,scores);
+  const deepDims=generateDeepDims(scores);
+
+  document.getElementById('letterCard').innerHTML=`
+    <div class="letter-head">✉️ ${d.n} 写给你</div>
+    <div class="letter-body">${letter.replace(/\n\n/g,'</p><p style="margin-top:14px">').replace(/\n/g,'<br>')}</div>
+    <div class="letter-sign">—— ${d.n}</div>`;
+
+  document.getElementById('filmCard').innerHTML=`
+    <div class="film-card-title">${film.title}</div>
+    <div class="film-card-subtitle">A FILM INSPIRED BY YOUR SOUL</div>
+    <div class="film-card-logline">${film.logline}</div>
+    <div class="film-card-tags">${film.tags.map(t=>`<span class="film-card-tag">${t}</span>`).join('')}</div>
+    <div style="margin-top:12px;font-size:12px;color:var(--t3)">视觉风格：${film.vis}</div>`;
+
+  let ddHTML='';
+  deepDims.forEach(dd=>{
+    ddHTML+=`<div class="deep-dim-item">
+      <div class="deep-dim-label">${dd.label}</div>
+      <div class="deep-dim-text">${dd.text}</div>
+    </div>`;
+  });
+  document.getElementById('deepDims').innerHTML=ddHTML;
+
+  // --- 导演签名/总结语 ---
+  const closingMessages={
+    '王家卫':'所有记忆都是潮湿的，而你——你本身就是一部值得反复回看的电影。不必赶时间，让一切慢慢发酵。',
+    '是枝裕和':'生活不在别处，就在那些最不起眼的日常里。一碗饭、一次沉默的对视、一句"我回来了"——请继续温柔地注视这个世界。',
+    '安德烈·塔可夫斯基':'你在缓慢中找到了力量。在这个催促一切加速的时代，你守护着时间应有的重量和尊严。那支燃烧的蜡烛，就是你。',
+    '阿彼察邦':'梦境与现实本就没有边界，你比大多数人都更懂得这一点。请继续在半梦半醒之间捕捉那些幽灵般的温柔低语。',
+    '侯孝贤':'远山不语，风吹过稻田，你也是这样的——沉静、悠长、让人想要长久地凝视。在留白里，藏着比语言更多的东西。',
+    '李安':'你不需要成为别人。你的柔韧本身就是一种力量，足以穿越任何风浪。克制与爆发之间的那道弧线，是你独特的生命轨迹。',
+    '杨德昌':'你用冷静到近乎残忍的目光审视这个世界——但那是因为你在乎。城市里的每一座孤岛，都值得被看见、被讲述。',
+    '阿斯哈·法哈蒂':'道德从来不是一道简单的选择题。你在灰色地带中寻找真相的勇气，是这个非黑即白的世界里最稀缺的品质。',
+    '安德烈·兹维亚金采夫':'你的沉默里有一种庄严的力量。在所有人都急着表达的时代，你用最少的语言说出了最深的话。',
+    '维姆·文德斯':'路还很长，天空还很大。你不是一个抵达者，你是一个永恒的漫游者——而最好的风景，永远在路上。',
+    '大卫·林奇':'甜美表象下的暗流，是你最熟悉的风景。不必惧怕潜意识深处那些奇怪的东西——它们是你最真实的素材。',
+    '查理·考夫曼':'意识的迷宫没有出口，但你不需要一个出口。在自我与他者的边界上，你种下了最奇异也最动人的诗。',
+    '罗伊·安德森':'你用最简洁的方式说出最复杂的真相。在灰调的荒诞中，你找到了一种近乎绝望的幽默——那是智者的笑。',
+    '迈克尔·哈内克':'冷峻背后是深切的关怀。你不提供廉价的安慰，因为你知道——真正的爱，有时候看起来像一把手术刀。',
+    '拉斯·冯·提尔':'你不惧怕深渊，因为你知道只有在最深的黑暗中才能看清光的形状。你的坦诚近乎自毁，但也因此无比珍贵。',
+    '丹尼斯·维伦纽瓦':'宏大与细腻在你这里并不矛盾。你在宇宙的尺度上探讨人性，让每一颗孤独的星球都找到了轨道。',
+    '宫崎骏':'起风了，唯有努力生存。你心中的那个孩子，请永远不要让他离开——他是你在任何风暴中都能找到光的理由。',
+    '新海诚':'距离和时间是你永恒的主题。那些错过的电车、黄昏时刻的思念、跨越时空的呼唤——它们不是遗憾，是你对这个世界最温柔的注视。',
+    '让-皮埃尔·热内':'世界是一个充满古怪细节和温暖巧合的地方，而你用比别人更明亮的眼睛看见了这一切。请继续把平凡变成魔法。',
+    '米歇尔·贡德里':'手工感的魔法胜过任何冰冷的技术。你的想象力不需要高科技来支撑——纸板和线绳就够了，还有一颗孩子般的心。',
+    '阿方索·卡隆':'你从不在宏大叙事中丢失人性的温度。童年记忆的光晕和宇宙中的孤独回响，在你这里找到了共同的频率。',
+    '斯派克·琼斯':'你对孤独有着格外细腻的理解，也因此对爱与连接的定义比别人更宽广。在你的世界里，即使AI也可以学会思念。',
+    '埃米尔·库斯图里卡':'用音乐和生命力对抗世界的荒诞——这是你最强大的武器。请继续让动物与人共舞，让痛苦在狂欢中被酿成酒。',
+    '韦斯·安德森':'在这个混乱的世界里，你用秩序和美感为自己建造了一座小小的避难所。对称不是强迫症，是温柔的抵抗。这很珍贵。',
+    '西奥·安哲罗普洛斯':'雾气中的国境线、缓慢移动的长镜头、历史与神话的迷雾——你在宏大叙事中安放了对个体最深沉悲悯。',
+    '肯·洛奇':'你对不公的愤怒和对弱者的共情，是你最锋利的武器。朴素不是缺乏技巧，而是相信故事本身的力量已经足够。',
+    '佩德罗·阿莫多瓦':'红色是你的颜色，炽热是你的温度。你对每一个边缘灵魂的深情注视，让这个灰暗的世界多了不可忽视的亮色。',
+    '昆汀·塔伦蒂诺':'你把类型片当积木，用密集的对话和反常规的结构创造出独一无二的节奏。把低俗炼成高级艺术——这是只有你才拥有的炼金术。',
+    '克林特·伊斯特伍德':'你不玩花活。最简练的叙事、最沉重的主题、最沉默的英雄——你用一辈子的时间证明了：少即是多，沉默胜于千言。',
+    '克里斯托弗·诺兰':'时间是你最着迷的谜题。但别忘了——有些东西不需要解构，只需要感受。理性和情感在你的世界里从不互斥，而是一种更高的平衡。',
+    '大卫·芬奇':'细节是你的信仰。每一帧都经过精密计算，黑暗是你揭示真相的画布而非沉溺的对象。你看见别人看不见的东西——这既是祝福也是孤独。',
+    '斯坦利·库布里克':'你对完美的追求是一种天赋，也是一种负担。从史前暴力到未来科技，你审视了人类文明的一切维度。偶尔，允许自己不够完美——因为你已经足够伟大。'
+  };
+  const closing=closingMessages[d.n]||'你是一种尚未被命名的诗。不必急于被理解——最好的故事，总是留给愿意等待的人。';
+  // --- 存储签名数据供打字机使用 ---
+  window._sigClosing=closing;
+  window._sigName=d.n;
+
+  // --- 设置 reveal 区域动画延迟 ---
+  const reveals=document.querySelectorAll('.reveal-section');
+  reveals.forEach((el,i)=>{
+    el.style.animationDelay=(i*0.06)+'s';
+  });
+
+  // 启动打字机效果
+  setTimeout(()=>startTypewriter(),400);
+  document.getElementById('signatureName').textContent='—— '+d.n;
+
+
+  show('result');
+  // 雷达图需在 result 可见后绘制
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>drawRadar(scores))});
+}
+
+// ============ 导演寄语(个性化模板) ============
+function generateLetter(director,code,scores){
+  const dm=DIMS;const dom=d=>scores[d.key]>=scores[d.key2]?d:d;
+  // 按五维选段落
+  const parts=[];
+  // 开头——按导演风格
+  const openings={
+    "王家卫":"我一直相信，每一个在深夜独自走过街角的人，都有一个只有自己知道的故事。你也是——对吗？",
+    "是枝裕和":"我不知道你是谁，但我知道你一定在某些不经意的时刻，被一杯热茶、一阵风、或者一声\"我回来了\"击中过。那些时刻，就是你生命的电影。",
+    "塔可夫斯基":"亲爱的朋友：你是否曾在某个黄昏，感到时间突然变得很慢？仿佛整个世界都在等你说出那句你一直没说出口的话。我拍电影，就是为了捕捉那个瞬间。而你的那个瞬间，一定很美。",
+    "李安":"我从来不觉得自己是\"大师\"。我只是一个一直在寻找平衡的人——在东方与西方之间，在克制与爆发之间，在应该怎样和想要怎样之间。你也是，对吧？",
+    "宫崎骏":"起风了。你有没有听到什么声音？那不是风声——是某个人、某个地方、某个你还没见过的世界在呼唤你。",
+    "韦斯·安德森":"秩序是一种温柔的抵抗。当世界混乱到不可收拾，至少我们还能把手中的小宇宙整理得井井有条。你懂的。"
+  };
+  const open=openings[director.n]||`你好。虽然我们素未谋面，但我知道——我们共享着同一种观看世界的方式。`;
+  parts.push(open);
+
+  // 中间——根据各个维度定制
+  if(scores.I>scores.N){parts.push("你是一个需要独处的人，这很好。安静是灵感的土壤，而你的内心世界比大多数人的都要丰饶。别让任何人告诉你这有什么不对。")}
+  if(scores.N>scores.T){parts.push("你相信直觉胜过逻辑。在这个痴迷于数据和效率的时代，这是一种稀有的勇气。模糊、暧昧、不可言说——这些不是你需要克服的缺陷，而是你感知世界的天赋。")}
+  if(scores.D>scores.P){parts.push("你心中始终有一张蓝图。现实可能一次次让你失望，但请保护好那个相信\"世界可以更好\"的自己。那个自己是所有伟大故事的第一作者。")}
+  if(scores.S>scores.X){parts.push("你不轻易表达，但每一个了解你的人都明白：最深的水流最安静。你的深情不需要大声宣布，它在你的每一个选择里。")}
+  if(scores.H>scores.F){parts.push("你常常回望过去。有人叫这怀旧，我称之为——你在收集时间的碎片。那些走过的路、爱过的人、失去的东西，在你心里变成了一座只有你自己能进入的博物馆。")}
+  if(scores.E>scores.I){parts.push("你是那种在人群中也能保持温度的人。你从相遇中获得能量，从对话中找到灵感。世界对你来说不是一座孤岛，而是一座永远在举办庆典的城市。")}
+  if(scores.T>scores.N){parts.push("你的思维像一把精致的手术刀。你相信逻辑和结构的力量，但这并不意味着你冷漠——你只是用另一种方式在关心这个世界。理性和温柔从不互斥。")}
+  if(scores.P>scores.D){parts.push("你是一个脚踏实地的人。你知道梦想很重要，但你更知道没有行动支撑的梦想只是幻想。这种务实不是妥协，而是让理想能够活下来的智慧。")}
+  if(scores.X>scores.S){parts.push("你热烈、坦荡，从不惧怕表达自己真实的感受。在这个习惯了戴面具的世界里，你的真诚是一种勇敢。继续保持，这个世界需要更多像你这样的人。")}
+  if(scores.F>scores.H){parts.push("你的眼睛总是看向前方。你不沉溺于过去，你对未知充满好奇。这种向前看的姿态不是遗忘，而是相信——最好的故事，永远在下一章。")}
+
+  // 结尾
+  parts.push(`所以，请继续用你独特的方式看待这个世界。不需要改变什么。你就是你——而这，恰好也是${director.n}电影里一直在寻找的那种人。`);
+  return parts.join('\n\n');
+}
+
+// ============ 你的电影(生成专属电影概念) ============
+const FILM_TITLES={
+  I:["《独白时刻》","《一个人的潮汐》","《深夜的第三种颜色》","《未命名日记》"],
+  E:["《相遇概率》","《人海中》","《所有道路都通向他人》","《我们在此相遇》"],
+  N:["《雾的形状》","《直觉的第十二页》","《在语言之前》","《不可言说之物》"],
+  T:["《理性的暗面》","《结构的诗》","《最后的方程式》","《秩序之外》"],
+  D:["《如果世界温柔》","《蓝色图景》","《尚未到来的光》","《理想之年》"],
+  P:["《具体生活》","《此刻的重量》","《脚踏实地的人》","《日常史诗》"],
+  S:["《未寄出的信》","《沉默的深度》","《水下的火焰》","《一切尽在不言中》"],
+  X:["《赤道》","《燃烧的边界》","《透明的我》","《不设防的城市》"],
+  H:["《时间的琥珀》","《所有的昨天》","《旧照片里的人》","《漫长的回望》"],
+  F:["《明天的地址》","《尚未抵达》","《近未来书简》","《下一个天亮之前》"]
+};
+const FILM_LOGLINES={
+  I:"一个习惯独自度过夜晚的人，在某一天发现——自己的内心世界开始向外渗透，改变了他看待一切的视角。",
+  E:"在一座偶然的城市里，几个陌生人的命运以不可预料的方式交织在一起，每个人都在改变彼此的人生轨迹。",
+  N:"当逻辑无法解释眼前的世界，她决定跟随直觉——哪怕那意味着将所有已知推翻重来。",
+  D:"她相信这个世界上有一种更好的活法。于是她上路了，去寻找那些尚未被讲述的故事。",
+  S:"有些话他从来没有对任何人说过，直到他发现——沉默本身也可以是一种震耳欲聋的表达。",
+  X:"她从不掩饰自己的感受，在一个人人都戴着面具的世界里，她的真诚既是一种武器，也是一种礼物。",
+  H:"翻开一本旧日记，他发现自己一直在重复同一个故事。这一次，他决定写下不一样的结局。",
+  F:"明天会发生什么？她不知道。但她在每一个今天都做好了准备。"
+};
+
+function generateFilm(director,code,scores){
+  const dom=DIMS.map(d=>scores[d.key]>=scores[d.key2]?d.key:d.key2);
+  // 选最高分的两个维度作为电影DNA
+  const scored=dom.map(k=>({k,v:scores[k]}));
+  scored.sort((a,b)=>b.v-a.v);
+  const primary=scored[0].k,secondary=scored[1].k;
+  // 片名
+  const titlePool=FILM_TITLES[primary]||FILM_TITLES['I'];
+  const title=titlePool[Math.floor(Math.random()*titlePool.length)];
+  // 梗概
+  const logline=FILM_LOGLINES[primary]||FILM_LOGLINES['I'];
+  // 视觉风格
+  const styles={
+    I:"内敛的手持镜头，大量浅景深特写，自然光为主",
+    E:"群戏调度，丰富的环境音，暖色调多人物构图",
+    N:"柔焦与光晕效果，跳跃的剪辑节奏，色彩偏梦幻",
+    T:"干净的几何构图，克制的色彩使用，冷调质感",
+    D:"大片留白，黄金时刻的光线，诗意的空镜",
+    S:"长镜头与固定机位，细节的凝视，安静的运镜",
+    X:"饱和的色彩，大胆的运镜，充满生命力",
+    H:"胶片质感，暖色偏黄的调色，时光斑驳的纹理",
+    F:"明快的节奏，现代感强烈的构图，冷调中带着光亮"
+  };
+  const vis=styles[primary]||'自然主义风格';
+  const tags=[
+    director.n+'式美学',
+    DIMS.find(d=>d.key===primary)?.l||'',
+    DIMS.find(d=>d.key===secondary)?.l||'',
+    '年度期待'
+  ];
+
+  return{title,logline,vis,tags};
+}
+
+// ============ 深度维度解读 ============
+function generateDeepDims(scores){
+  const deepTexts={
+    I:{l:'内倾独处',d:'你从独处中获得能量。对你来说，一个人的时间不是孤独而是自由。你的创意往往在安静中萌发——深夜、清晨、或任何无人打扰的时刻。你不需要外界告诉你该做什么，你内心的指南针比任何地图都精确。'},
+    E:{l:'外倾连接',d:'你从人与人的交汇中汲取能量。每一次对话、每一次相遇都可能成为你灵感的火花。你善于在不同的社交场合中找到自己的位置，人们愿意向你敞开心扉——因为你懂得倾听。'},
+    N:{l:'直觉感受',d:'你信任那种说不清但很确定的感受。你的思维方式是跳跃的、诗意的——你看见的是画面，感知的是情绪，而不是冷冰冰的数据。在一个人人都在追求确定性的时代，你的模糊感知能力反而是一种稀有的天赋。'},
+    T:{l:'理性分析',d:'你的大脑是一个精密的处理系统。你善于拆解复杂问题，在混乱中找到秩序。你的理性并不意味着冷漠——你只是用逻辑来保护一颗敏感的心。你的每一次判断都是深思熟虑的结果。'},
+    D:{l:'理想主义',d:'你心中有光。你相信世界可以更好，人与人之间可以有更深的理解。有人会说这太天真，但他们只是忘记了自己也曾相信过。你的理想不是逃避现实的借口，而是改变现实的动力。'},
+    P:{l:'务实适应',d:'你脚踏实地。你知道梦想很美，但实现梦想需要一步一个脚印。务实不是妥协，而是最可靠的前进方式。在别人还在幻想的时候，你已经出发了。'},
+    S:{l:'含蓄静谧',d:'你的情感是深水而非浅滩。你不轻易表达，但一旦表达便字字珠玑。你的含蓄不是冷漠，而是一种更为深沉的热情——它静静燃烧，比任何喧哗都持久。'},
+    X:{l:'外放热烈',d:'你活得坦荡而热烈。你不惮于表达自己真实的感受，这种真诚在这个习惯了伪装的世界上是一种稀有的品质。你的热烈不是冲动，而是对生命的全部投入。'},
+    H:{l:'怀旧沉湎',d:'过去对你来说从来不只是过去。它是你的一部分，塑造了今天的你，也指引着明天的方向。你的怀旧不是沉溺，而是对时间和记忆最深沉的敬意。'},
+    F:{l:'前瞻探索',d:'你的目光永远投向前方。未知不是恐惧的来源而是期待的起点。你不沉溺于过去，因为你相信——最好的故事永远在下一章。这种向前的姿态是你最强大的资本。'}
+  };
+  const dom=DIMS.map(d=>scores[d.key]>=scores[d.key2]?d.key:d.key2);
+  return dom.map(k=>{
+    const t=deepTexts[k];
+    return{label:`${t.l}（${scores[k]}/5）`,text:t.d};
+  });
+}
+
+
+function resolveDir(code){
+  if(DIR[code])return DIR[code];
+  return DIR['SecretA'];
+}
+
+function restartTest(){
+  stopTypewriter();
+  rd=null;
+  // 已购买用户重新测试时不需再付费
+  window._skipTeaser=isPurchased();
+  show('welcome');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+function copyShare(){
+  if(!rd)return;
+  const t=`🎬 我的导演人格测试\n\n我与【${rd.name}】共享灵魂。${rd.emoji}\n${rd.qt}\n\n你的灵魂又与哪位导演共振？\n👉 来测测看`;
+  navigator.clipboard.writeText(t).then(()=>toast('✅ 文案已复制，去朋友圈分享吧')).catch(()=>toast('复制失败，请长按手动复制'));
+}
+function shareCard(){
+  if(!rd)return;
+  const canvas=document.getElementById('shareCanvas'),ctx=canvas.getContext('2d');
+  const W=600,H=900;
+  const cl=rd.color;
+
+  // 背景 - 奶油纸色
+  ctx.fillStyle='#faf8f3';ctx.fillRect(0,0,W,H);
+
+  // 顶部大色块 - 电影海报风格
+  const headerGrad=ctx.createLinearGradient(0,0,0,420);
+  headerGrad.addColorStop(0,cl+'cc');
+  headerGrad.addColorStop(0.7,cl+'44');
+  headerGrad.addColorStop(1,cl+'08');
+  ctx.fillStyle=headerGrad;ctx.fillRect(0,0,W,420);
+
+  // 顶部胶片齿孔装饰
+  ctx.fillStyle='#faf8f3';
+  for(let i=30;i<W;i+=36){
+    ctx.fillRect(i,20,14,16);
+    ctx.fillRect(i,46,14,16);
+  }
+  // 底部胶片齿孔
+  for(let i=30;i<W;i+=36){
+    ctx.fillRect(i,H-36,14,16);
+    ctx.fillRect(i,H-62,14,16);
+  }
+
+  // 导演 emoji
+  ctx.font='80px serif';ctx.textAlign='center';
+  ctx.fillText(rd.emoji,W/2,140);
+
+  // 类型码标签
+  ctx.fillStyle='rgba(255,255,255,.25)';ctx.font='bold 22px "SF Mono","Cascadia Code",monospace';
+  ctx.fillText(rd.code,W/2,185);
+
+  // 短装饰线
+  ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect(W/2-25,200,50,1.5);
+
+  // 名字 - 大字海报风
+  ctx.fillStyle='#2c2416';ctx.font='bold 52px "Noto Serif SC",serif';
+  ctx.fillText(rd.name,W/2,275);
+
+  // 英文名
+  ctx.fillStyle='#6b5e4a';ctx.font='italic 16px "Cormorant Garamond",serif';
+  ctx.fillText(rd.en,W/2,305);
+
+  // 引语区
+  ctx.fillStyle='#faf8f3';ctx.fillRect(60,345,W-120,1);
+
+  ctx.fillStyle='#4a3f2a';ctx.font='italic 18px "Cormorant Garamond","Noto Serif SC",serif';
+  const qtLines=wrapText(ctx,rd.qt,W-120);
+  let qy=385;
+  qtLines.forEach(l=>{ctx.fillText(l,W/2,qy);qy+=28});
+
+  // 出处
+  ctx.fillStyle='#9c8b70';ctx.font='12px "Noto Serif SC",serif';
+  // rd.qtCn might have the source
+  const srcText=document.getElementById('rquoteCn')?.textContent||'';
+  ctx.fillText(srcText,W/2,qy+10);
+
+  ctx.fillStyle='#faf8f3';ctx.fillRect(60,qy+30,W-120,1);
+
+  // 中部简介区
+  let contentY=qy+70;
+  ctx.fillStyle='#2c2416';ctx.font='bold 16px "Noto Serif SC",serif';
+  ctx.fillText('灵魂共振',W/2,contentY);
+  contentY+=30;
+
+  ctx.fillStyle='#6b5e4a';ctx.font='15px "Noto Serif SC",serif';
+  const bioLines=wrapText(ctx,rd.bio,W-100);
+  bioLines.forEach(l=>{ctx.fillText(l,W/2,contentY);contentY+=26});
+
+  // 经典作品区
+  contentY+=20;
+  ctx.fillStyle='#2c2416';ctx.font='bold 16px "Noto Serif SC",serif';
+  ctx.fillText('代表作品',W/2,contentY);
+  contentY+=30;
+
+  ctx.fillStyle=cl+'22';ctx.fillRect(100,contentY-20,W-200,Math.min(rd.films?rd.films.length*30:90,120)+30);
+
+  ctx.fillStyle='#6b5e4a';ctx.font='14px "Noto Serif SC",serif';
+  if(rd.films&&rd.films.length){
+    const filmLines=[];
+    let line='';
+    rd.films.forEach((f,i)=>{
+      const t='《'+f+'》';
+      if(ctx.measureText(line+t).width>W-140){
+        filmLines.push(line);
+        line=t;
+      }else{
+        line+=t;
+      }
+    });
+    if(line)filmLines.push(line);
+    filmLines.forEach(l=>{ctx.fillText(l,W/2,contentY);contentY+=28});
+  }
+
+  // 底部 CTA
+  const footerY=H-100;
+  ctx.fillStyle='#2c2416';ctx.font='bold 20px "Noto Serif SC",serif';
+  ctx.fillText('你与哪位导演共享灵魂？',W/2,footerY);
+
+  ctx.fillStyle=cl;ctx.fillRect(W/2-80,footerY+18,160,38);
+  ctx.fillStyle='#fff';ctx.font='bold 18px "Noto Serif SC",serif';
+  ctx.fillText('来 测 测 看',W/2,footerY+44);
+
+  canvas.toBlob(blob=>{
+    if(navigator.share){
+      navigator.share({files:[new File([blob],'director-type.png',{type:'image/png'})],title:'我的导演人格',text:`我与${rd.name}共享灵魂`}).catch(()=>{});
+    }else{
+      const u=URL.createObjectURL(blob),a=document.createElement('a');
+      a.href=u;a.download=`director-${rd.code}.png`;a.click();URL.revokeObjectURL(u);
+      toast('📸 分享卡片已下载');
+    }
+  });
+}
+function wrapText(ctx,text,maxW){
+  const lines=[];let cur='';
+  for(let i=0;i<text.length;i++){const test=cur+text[i];if(ctx.measureText(test).width>maxW){lines.push(cur);cur=text[i]}else cur=test}
+  if(cur)lines.push(cur);return lines;
+}
+function toast(msg){
+  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+
+
+
+// ============ 打字机效果 + 签名动画 ============
+let _twTimer=null,_twIndex=0,_twText='';
+function startTypewriter(){
+  stopTypewriter();
+  const el=document.getElementById('signatureClosing');
+  const nameEl=document.getElementById('signatureName');
+  const sigSection=document.getElementById('signatureSection');
+  if(!el||!window._sigClosing)return;
+  _twText=window._sigClosing;
+  _twIndex=0;
+  el.textContent='';
+  // 重置状态
+  sigSection.classList.remove('played');
+  nameEl.classList.remove('animate-in');
+  nameEl.textContent='—— '+window._sigName;
+  nameEl.style.opacity='0';
+  el.innerHTML='<span class="cursor-blink"></span>';
+
+  function type(){
+    if(_twIndex<_twText.length){
+      const char=_twText[_twIndex];
+      _twIndex++;
+      // 移除光标，添加字符，再加回光标
+      const beforeCursor=_twText.substring(0,_twIndex);
+      el.innerHTML=beforeCursor+'<span class="cursor-blink"></span>';
+      _twTimer=setTimeout(type,60+Math.random()*80);
+    }else{
+      // 打字完成：移除光标，显示签名
+      el.textContent=_twText;
+      setTimeout(()=>{
+        nameEl.style.opacity='1';
+        nameEl.classList.add('animate-in');
+        sigSection.classList.add('played');
+      },200);
+    }
+  }
+  _twTimer=setTimeout(type,300);
+}
+function stopTypewriter(){
+  if(_twTimer){clearTimeout(_twTimer);_twTimer=null;}
+}
+function playSignature(){
+  stopTypewriter();
+  startTypewriter();
+}
+
+// ============ 初始 ============
+show('welcome');
+</script>
+
+<!-- 支付弹窗 -->
+<div class="pay-modal-mask" id="payModalMask">
+  <div class="pay-modal-box">
+    <button class="pay-modal-close" onclick="closePayModal()">✕</button>
+    <div class="pay-modal-emoji">🔓</div>
+    <div class="pay-modal-title" id="payModalTitle">解锁完整人格报告</div>
+    <div class="pay-modal-sub">25 道题 · 5 个维度 · 1 位灵魂导演</div>
+    <div class="pay-modal-price">¥0.99 <sub>/ 永久</sub></div>
+
+    <!-- 支付码区域 -->
+    <div class="pay-qr-wrap" id="payQrWrap">
+      <div class="pay-qr-inner">
+        <div class="pay-qr-icon">📱</div>
+        <div>微信/支付宝</div>
+        <div style="font-size:10px;margin-top:4px;opacity:.6">扫码支付</div>
+      </div>
+    </div>
+    <div class="pay-modal-note">支付成功后自动解锁全部内容</div>
+
+    <button class="pay-modal-btn" id="paySimBtn" onclick="simulatePay()">
+      💳 确认支付 ¥0.99
+    </button>
+
+    <!-- 解锁码备用 -->
+    <button class="pay-modal-btn alt" id="payCodeToggle" onclick="toggleCodeInput()">
+      🔑 使用解锁码
+    </button>
+    <div id="codeInputArea" style="display:none">
+      <input class="pay-code-input" type="text" id="unlockCodeInput" placeholder="请输入解锁码" maxlength="20">
+      <button class="pay-modal-btn" onclick="verifyUnlockCode()" style="background:var(--a3)">验证解锁码</button>
+      <div class="pay-code-hint">解锁码可通过参与活动获得</div>
+    </div>
+  </div>
+</div>
+
+<!-- 支付成功动画 -->
+<div class="pay-success-overlay" id="paySuccess">
+  <div class="pay-success-content">
+    <div class="pay-success-check">✅</div>
+    <div class="pay-success-text">解锁成功！</div>
+    <div class="pay-success-sub">正在为你生成完整报告…</div>
+  </div>
+</div>
+
+</body>
+</html>
