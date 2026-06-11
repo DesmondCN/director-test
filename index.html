@@ -2608,26 +2608,30 @@ function copyShare(){
 }
 function shareCard(){
   if(!rd)return;
-  const canvas=document.getElementById('shareCanvas'),ctx=canvas.getContext('2d');
-  const W=600,H=900;
-  const cl=rd.color;
+  var canvas=document.getElementById('shareCanvas'),ctx=canvas.getContext('2d');
+  var cl=rd.color;
+  var dpr=window.devicePixelRatio||2;
+  var W=600,H=900;
+
+  // 高清渲染：canvas 实际像素 = 显示尺寸 × 设备像素比
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr);
 
   // 背景
   ctx.fillStyle='#faf8f3';ctx.fillRect(0,0,W,H);
 
   // 顶部色块
-  const headerGrad=ctx.createLinearGradient(0,0,0,420);
-  headerGrad.addColorStop(0,cl+'cc');
-  headerGrad.addColorStop(0.7,cl+'44');
-  headerGrad.addColorStop(1,cl+'08');
-  ctx.fillStyle=headerGrad;ctx.fillRect(0,0,W,420);
+  var g=ctx.createLinearGradient(0,0,0,420);
+  g.addColorStop(0,cl+'cc');g.addColorStop(0.7,cl+'44');g.addColorStop(1,cl+'08');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,420);
 
   // 胶片齿孔
   ctx.fillStyle='#faf8f3';
-  for(let i=30;i<W;i+=36){ctx.fillRect(i,20,14,16);ctx.fillRect(i,46,14,16);}
-  for(let i=30;i<W;i+=36){ctx.fillRect(i,H-36,14,16);ctx.fillRect(i,H-62,14,16);}
+  for(var i=30;i<W;i+=36){ctx.fillRect(i,20,14,16);ctx.fillRect(i,46,14,16);}
+  for(var i=30;i<W;i+=36){ctx.fillRect(i,H-36,14,16);ctx.fillRect(i,H-62,14,16);}
 
-  // Emoji + 类型码
+  // Emoji + 码
   ctx.font='80px serif';ctx.textAlign='center';ctx.fillText(rd.emoji,W/2,140);
   ctx.fillStyle='rgba(255,255,255,.25)';ctx.font='bold 22px monospace';ctx.fillText(rd.code,W/2,185);
   ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect(W/2-25,200,50,1.5);
@@ -2639,8 +2643,7 @@ function shareCard(){
   // 语录
   ctx.fillStyle='#faf8f3';ctx.fillRect(60,345,W-120,1);
   ctx.fillStyle='#4a3f2a';ctx.font='italic 18px "Cormorant Garamond","Noto Serif SC",serif';
-  var qtLines=wrapText(ctx,rd.qt,W-120);
-  var qy=385;
+  var qtLines=wrapText(ctx,rd.qt,W-120),qy=385;
   qtLines.forEach(function(l){ctx.fillText(l,W/2,qy);qy+=28;});
   ctx.fillStyle='#9c8b70';ctx.font='12px "Noto Serif SC",serif';
   var srcText=document.getElementById('rquoteCn')?document.getElementById('rquoteCn').textContent:'';
@@ -2677,12 +2680,15 @@ function shareCard(){
   ctx.fillStyle=cl;ctx.fillRect(W/2-80,footerY+18,160,38);
   ctx.fillStyle='#fff';ctx.font='bold 18px "Noto Serif SC",serif';ctx.fillText('来 测 测 看',W/2,footerY+44);
 
-  // 生成图片 URL，展示在弹窗中（微信等环境最可靠的长按保存方式）
-  var imgData=canvas.toDataURL('image/png');
-  var modal=document.getElementById('shareImgModal');
-  var img=document.getElementById('shareImgPreview');
-  img.src=imgData;
-  modal.classList.add('show');
+  // 用 toBlob 生成高清图片用于展示+下载
+  canvas.toBlob(function(blob){
+    var url=URL.createObjectURL(blob);
+    var img=document.getElementById('shareImgPreview');
+    img.src=url;
+    // 存下来给下载按钮用
+    img.setAttribute('data-blob-url',url);
+    document.getElementById('shareImgModal').classList.add('show');
+  },'image/png',1.0);
 }
 function wrapText(ctx,text,maxW){
   const lines=[];let cur='';
@@ -2751,11 +2757,17 @@ function closeShareImg(){
 }
 function saveShareImg(){
   var img=document.getElementById('shareImgPreview');
-  var link=document.createElement('a');
-  link.download='director-'+rd.code+'.png';
-  link.href=img.src;
-  link.click();
-  toast('📸 图片已保存');
+  var url=img.getAttribute('data-blob-url')||img.src;
+  var a=document.createElement('a');
+  a.download='director-'+rd.code+'.png';
+  a.href=url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  // 如果 a.click() 没触发下载（微信等），提示长按
+  setTimeout(function(){
+    if(!window._dlFired) toast('📸 请长按上方图片保存或分享');
+  },600);
 }
 
 // ============ 初始 ============
@@ -2809,7 +2821,7 @@ show('welcome');
 <div class="share-img-modal" id="shareImgModal" onclick="closeShareImg()">
   <div class="share-img-box" onclick="event.stopPropagation()">
     <div class="share-img-close" onclick="closeShareImg()">✕</div>
-    <div class="share-img-hint">👇 长按图片保存或分享给朋友</div>
+    <div class="share-img-hint">👇 长按图片保存，或分享给微信好友</div>
     <img id="shareImgPreview" src="" alt="分享卡片" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.15);">
     <div class="share-img-actions">
       <button class="share-img-save" onclick="saveShareImg()">💾 保存图片</button>
