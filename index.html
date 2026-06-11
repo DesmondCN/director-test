@@ -1742,7 +1742,7 @@ body{
 <div class="toast" id="toast"></div>
 
 
-<canvas id="shareCanvas" style="display:none" width="600" height="900"></canvas>
+<canvas id="shareCanvas" style="position:fixed;left:-9999px;top:0;visibility:hidden" width="600" height="900"></canvas>
 
 <script>
 // ============ 五维度 ============
@@ -2608,7 +2608,7 @@ function copyShare(){
 }
 function shareCard(){
   if(!rd)return;
-  var canvas=document.getElementById('shareCanvas'),ctx=canvas.getContext('2d');
+  var canvas=document.getElementById('shareCanvas'),ctx=canvas.getContext('2d');canvas.style.visibility='visible';
   var cl=rd.color;
   var dpr=window.devicePixelRatio||2;
   var W=600,H=900;
@@ -2681,7 +2681,7 @@ function shareCard(){
   ctx.fillStyle='#fff';ctx.font='bold 18px "Noto Serif SC",serif';ctx.fillText('来 测 测 看',W/2,footerY+44);
 
   // 用 toBlob 生成高清图片用于展示+下载
-  canvas.toBlob(function(blob){
+  canvas.toBlob(function(blob){canvas.style.visibility='hidden';
     var url=URL.createObjectURL(blob);
     var img=document.getElementById('shareImgPreview');
     img.src=url;
@@ -2756,18 +2756,23 @@ function closeShareImg(){
   document.getElementById('shareImgModal').classList.remove('show');
 }
 function saveShareImg(){
+  var ua=navigator.userAgent||'';
+  var isWechat=ua.indexOf('MicroMessenger')>-1;
+  if(isWechat){
+    toast('📸 请长按上方图片 → 保存到相册');
+    return;
+  }
   var img=document.getElementById('shareImgPreview');
   var url=img.getAttribute('data-blob-url')||img.src;
+  // 尝试用 Blob URL 下载
   var a=document.createElement('a');
   a.download='director-'+rd.code+'.png';
   a.href=url;
+  a.style.display='none';
   document.body.appendChild(a);
   a.click();
-  document.body.removeChild(a);
-  // 如果 a.click() 没触发下载（微信等），提示长按
-  setTimeout(function(){
-    if(!window._dlFired) toast('📸 请长按上方图片保存或分享');
-  },600);
+  setTimeout(function(){document.body.removeChild(a);},200);
+  toast('📸 图片已保存到相册');
 }
 
 // ============ 初始 ============
@@ -2821,10 +2826,10 @@ show('welcome');
 <div class="share-img-modal" id="shareImgModal" onclick="closeShareImg()">
   <div class="share-img-box" onclick="event.stopPropagation()">
     <div class="share-img-close" onclick="closeShareImg()">✕</div>
-    <div class="share-img-hint">👇 长按图片保存，或分享给微信好友</div>
+    <div class="share-img-hint">👇 长按图片保存到相册，或直接分享给朋友</div>
     <img id="shareImgPreview" src="" alt="分享卡片" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.15);">
     <div class="share-img-actions">
-      <button class="share-img-save" onclick="saveShareImg()">💾 保存图片</button>
+      <button class="share-img-save" onclick="saveShareImg()">💾 保存到相册</button>
     </div>
   </div>
 </div>
