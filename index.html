@@ -1525,6 +1525,40 @@ body{
   .pay-qr-wrap { width: 170px; height: 170px; }
 }
 
+
+/* 分享图片弹窗 */
+.share-img-modal {
+  position: fixed;inset: 0;background: rgba(0,0,0,.7);z-index: 500;
+  display: flex;align-items: flex-start;justify-content: center;
+  overflow-y: auto;padding: 20px;
+  opacity: 0;pointer-events:none;transition: opacity .3s ease;
+}
+.share-img-modal.show {
+  opacity: 1;pointer-events: auto;
+}
+.share-img-box {
+  background: #fff;border-radius: 16px;padding: 16px 16px 12px;
+  max-width: 360px;width: 100%;margin: auto;
+  animation: modalSlideUp .35s ease;
+}
+.share-img-close {
+  text-align: right;font-size: 22px;color: var(--t3);cursor: pointer;
+  line-height: 1;margin-bottom: 4px;
+}
+.share-img-hint {
+  text-align: center;font-size: 13px;color: var(--t2);margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+.share-img-actions {
+  display: flex;gap: 10px;margin-top: 12px;justify-content: center;
+}
+.share-img-save {
+  padding: 12px 24px;border-radius: 12px;background: var(--ac);color: #fff;
+  border: none;font-size: 14px;font-weight: 600;cursor: pointer;
+  font-family: inherit;letter-spacing: 2px;transition: all .25s ease;
+}
+.share-img-save:hover { background: #6b8a61; }
+
 </style>
 </head>
 <body>
@@ -2569,7 +2603,7 @@ function restartTest(){
 
 function copyShare(){
   if(!rd)return;
-  const t=`🎬 我的导演人格测试\n\n我与【${rd.name}】共享灵魂。${rd.emoji}\n${rd.qt}\n\n你的灵魂又与哪位导演共振？\n👉 来测测看`;
+  const t='🎬 我的导演人格测试\n\n我与【'+rd.name+'】共享灵魂。'+rd.emoji+'\n'+rd.qt+'\n\n你的灵魂又与哪位导演共振？\n👉 来测测看：https://desmondcn.github.io/director-test/';
   navigator.clipboard.writeText(t).then(()=>toast('✅ 文案已复制，去朋友圈分享吧')).catch(()=>toast('复制失败，请长按手动复制'));
 }
 function shareCard(){
@@ -2578,122 +2612,84 @@ function shareCard(){
   const W=600,H=900;
   const cl=rd.color;
 
-  // 背景 - 奶油纸色
+  // 背景
   ctx.fillStyle='#faf8f3';ctx.fillRect(0,0,W,H);
 
-  // 顶部大色块 - 电影海报风格
+  // 顶部色块
   const headerGrad=ctx.createLinearGradient(0,0,0,420);
   headerGrad.addColorStop(0,cl+'cc');
   headerGrad.addColorStop(0.7,cl+'44');
   headerGrad.addColorStop(1,cl+'08');
   ctx.fillStyle=headerGrad;ctx.fillRect(0,0,W,420);
 
-  // 顶部胶片齿孔装饰
+  // 胶片齿孔
   ctx.fillStyle='#faf8f3';
-  for(let i=30;i<W;i+=36){
-    ctx.fillRect(i,20,14,16);
-    ctx.fillRect(i,46,14,16);
-  }
-  // 底部胶片齿孔
-  for(let i=30;i<W;i+=36){
-    ctx.fillRect(i,H-36,14,16);
-    ctx.fillRect(i,H-62,14,16);
-  }
+  for(let i=30;i<W;i+=36){ctx.fillRect(i,20,14,16);ctx.fillRect(i,46,14,16);}
+  for(let i=30;i<W;i+=36){ctx.fillRect(i,H-36,14,16);ctx.fillRect(i,H-62,14,16);}
 
-  // 导演 emoji
-  ctx.font='80px serif';ctx.textAlign='center';
-  ctx.fillText(rd.emoji,W/2,140);
-
-  // 类型码标签
-  ctx.fillStyle='rgba(255,255,255,.25)';ctx.font='bold 22px "SF Mono","Cascadia Code",monospace';
-  ctx.fillText(rd.code,W/2,185);
-
-  // 短装饰线
+  // Emoji + 类型码
+  ctx.font='80px serif';ctx.textAlign='center';ctx.fillText(rd.emoji,W/2,140);
+  ctx.fillStyle='rgba(255,255,255,.25)';ctx.font='bold 22px monospace';ctx.fillText(rd.code,W/2,185);
   ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect(W/2-25,200,50,1.5);
 
-  // 名字 - 大字海报风
-  ctx.fillStyle='#2c2416';ctx.font='bold 52px "Noto Serif SC",serif';
-  ctx.fillText(rd.name,W/2,275);
+  // 名字
+  ctx.fillStyle='#2c2416';ctx.font='bold 52px "Noto Serif SC",serif';ctx.fillText(rd.name,W/2,275);
+  ctx.fillStyle='#6b5e4a';ctx.font='italic 16px "Cormorant Garamond",serif';ctx.fillText(rd.en,W/2,305);
 
-  // 英文名
-  ctx.fillStyle='#6b5e4a';ctx.font='italic 16px "Cormorant Garamond",serif';
-  ctx.fillText(rd.en,W/2,305);
-
-  // 引语区
+  // 语录
   ctx.fillStyle='#faf8f3';ctx.fillRect(60,345,W-120,1);
-
   ctx.fillStyle='#4a3f2a';ctx.font='italic 18px "Cormorant Garamond","Noto Serif SC",serif';
-  const qtLines=wrapText(ctx,rd.qt,W-120);
-  let qy=385;
-  qtLines.forEach(l=>{ctx.fillText(l,W/2,qy);qy+=28});
-
-  // 出处
+  var qtLines=wrapText(ctx,rd.qt,W-120);
+  var qy=385;
+  qtLines.forEach(function(l){ctx.fillText(l,W/2,qy);qy+=28;});
   ctx.fillStyle='#9c8b70';ctx.font='12px "Noto Serif SC",serif';
-  // rd.qtCn might have the source
-  const srcText=document.getElementById('rquoteCn')?.textContent||'';
+  var srcText=document.getElementById('rquoteCn')?document.getElementById('rquoteCn').textContent:'';
   ctx.fillText(srcText,W/2,qy+10);
-
   ctx.fillStyle='#faf8f3';ctx.fillRect(60,qy+30,W-120,1);
 
-  // 中部简介区
-  let contentY=qy+70;
-  ctx.fillStyle='#2c2416';ctx.font='bold 16px "Noto Serif SC",serif';
-  ctx.fillText('灵魂共振',W/2,contentY);
+  // 简介
+  var contentY=qy+70;
+  ctx.fillStyle='#2c2416';ctx.font='bold 16px "Noto Serif SC",serif';ctx.fillText('灵魂共振',W/2,contentY);
   contentY+=30;
-
   ctx.fillStyle='#6b5e4a';ctx.font='15px "Noto Serif SC",serif';
-  const bioLines=wrapText(ctx,rd.bio,W-100);
-  bioLines.forEach(l=>{ctx.fillText(l,W/2,contentY);contentY+=26});
+  var bioLines=wrapText(ctx,rd.bio,W-100);
+  bioLines.forEach(function(l){ctx.fillText(l,W/2,contentY);contentY+=26;});
 
-  // 经典作品区
+  // 作品
   contentY+=20;
-  ctx.fillStyle='#2c2416';ctx.font='bold 16px "Noto Serif SC",serif';
-  ctx.fillText('代表作品',W/2,contentY);
+  ctx.fillStyle='#2c2416';ctx.font='bold 16px "Noto Serif SC",serif';ctx.fillText('代表作品',W/2,contentY);
   contentY+=30;
-
-  ctx.fillStyle=cl+'22';ctx.fillRect(100,contentY-20,W-200,Math.min(rd.films?rd.films.length*30:90,120)+30);
-
+  ctx.fillStyle=cl+'22';ctx.fillRect(100,contentY-20,W-200,90);
   ctx.fillStyle='#6b5e4a';ctx.font='14px "Noto Serif SC",serif';
   if(rd.films&&rd.films.length){
-    const filmLines=[];
-    let line='';
-    rd.films.forEach((f,i)=>{
-      const t='《'+f+'》';
-      if(ctx.measureText(line+t).width>W-140){
-        filmLines.push(line);
-        line=t;
-      }else{
-        line+=t;
-      }
+    var filmLines=[],line='';
+    rd.films.forEach(function(f){
+      var t='《'+f+'》';
+      if(ctx.measureText(line+t).width>W-140){filmLines.push(line);line=t;}else{line+=t;}
     });
     if(line)filmLines.push(line);
-    filmLines.forEach(l=>{ctx.fillText(l,W/2,contentY);contentY+=28});
+    filmLines.forEach(function(l){ctx.fillText(l,W/2,contentY);contentY+=28;});
   }
 
-  // 底部 CTA
-  const footerY=H-100;
-  ctx.fillStyle='#2c2416';ctx.font='bold 20px "Noto Serif SC",serif';
-  ctx.fillText('你与哪位导演共享灵魂？',W/2,footerY);
-
+  // 底部
+  var footerY=H-100;
+  ctx.fillStyle='#2c2416';ctx.font='bold 20px "Noto Serif SC",serif';ctx.fillText('你与哪位导演共享灵魂？',W/2,footerY);
   ctx.fillStyle=cl;ctx.fillRect(W/2-80,footerY+18,160,38);
-  ctx.fillStyle='#fff';ctx.font='bold 18px "Noto Serif SC",serif';
-  ctx.fillText('来 测 测 看',W/2,footerY+44);
+  ctx.fillStyle='#fff';ctx.font='bold 18px "Noto Serif SC",serif';ctx.fillText('来 测 测 看',W/2,footerY+44);
 
-  canvas.toBlob(blob=>{
-    if(navigator.share){
-      navigator.share({files:[new File([blob],'director-type.png',{type:'image/png'})],title:'我的导演人格',text:`我与${rd.name}共享灵魂`}).catch(()=>{});
-    }else{
-      const u=URL.createObjectURL(blob),a=document.createElement('a');
-      a.href=u;a.download=`director-${rd.code}.png`;a.click();URL.revokeObjectURL(u);
-      toast('📸 分享卡片已下载');
-    }
-  });
+  // 生成图片 URL，展示在弹窗中（微信等环境最可靠的长按保存方式）
+  var imgData=canvas.toDataURL('image/png');
+  var modal=document.getElementById('shareImgModal');
+  var img=document.getElementById('shareImgPreview');
+  img.src=imgData;
+  modal.classList.add('show');
 }
 function wrapText(ctx,text,maxW){
   const lines=[];let cur='';
   for(let i=0;i<text.length;i++){const test=cur+text[i];if(ctx.measureText(test).width>maxW){lines.push(cur);cur=text[i]}else cur=test}
   if(cur)lines.push(cur);return lines;
 }
+
 function toast(msg){
   const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'),2200);
@@ -2748,6 +2744,20 @@ function playSignature(){
   startTypewriter();
 }
 
+
+// ============ 分享图片弹窗控制 ============
+function closeShareImg(){
+  document.getElementById('shareImgModal').classList.remove('show');
+}
+function saveShareImg(){
+  var img=document.getElementById('shareImgPreview');
+  var link=document.createElement('a');
+  link.download='director-'+rd.code+'.png';
+  link.href=img.src;
+  link.click();
+  toast('📸 图片已保存');
+}
+
 // ============ 初始 ============
 show('welcome');
 </script>
@@ -2791,6 +2801,19 @@ show('welcome');
     <div class="pay-success-check">✅</div>
     <div class="pay-success-text">解锁成功！</div>
     <div class="pay-success-sub">正在为你生成完整报告…</div>
+  </div>
+</div>
+
+
+<!-- 分享图片弹窗 -->
+<div class="share-img-modal" id="shareImgModal" onclick="closeShareImg()">
+  <div class="share-img-box" onclick="event.stopPropagation()">
+    <div class="share-img-close" onclick="closeShareImg()">✕</div>
+    <div class="share-img-hint">👇 长按图片保存或分享给朋友</div>
+    <img id="shareImgPreview" src="" alt="分享卡片" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.15);">
+    <div class="share-img-actions">
+      <button class="share-img-save" onclick="saveShareImg()">💾 保存图片</button>
+    </div>
   </div>
 </div>
 
