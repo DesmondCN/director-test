@@ -1559,6 +1559,36 @@ body{
 }
 .share-img-save:hover { background: #6b8a61; }
 
+
+/* 调试面板 */
+.debug-panel {
+  display: none;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #fbfaf6;
+  border: 1px dashed var(--bd);
+  border-radius: 12px;
+  animation: fadeUp .3s ease;
+}
+.debug-panel.show { display: block; }
+.debug-panel-label {
+  font-size: 11px; letter-spacing: 3px; color: var(--t3);
+  margin-bottom: 10px;
+}
+.debug-panel select {
+  padding: 8px 12px; border: 1px solid var(--bd); border-radius: 8px;
+  font-size: 13px; font-family: inherit; background: #fff; color: var(--text);
+  max-width: 280px; width: 100%; cursor: pointer;
+}
+.debug-panel select:focus { outline: none; border-color: var(--ac); }
+.debug-jump-btn {
+  display: inline-block; margin-left: 8px; padding: 8px 16px;
+  background: var(--ac); color: #fff; border: none; border-radius: 8px;
+  font-size: 12px; cursor: pointer; font-family: inherit; letter-spacing: 2px;
+}
+.debug-jump-btn:hover { background: #6b8a61; }
+
 </style>
 </head>
 <body>
@@ -1592,6 +1622,13 @@ body{
       <div class="hero-meta-item"><div class="hero-meta-num">5</div><div class="hero-meta-label">个维度</div></div>
     </div>
     <button class="btn-primary" onclick="startTest()">开 始 探 索</button>
+  </div>
+
+  <!-- 调试面板（三击 🎬 图标显示） -->
+  <div class="debug-panel" id="debugPanel">
+    <div class="debug-panel-label">🔧 调试模式 · 直接查看导演报告</div>
+    <select id="debugDirectorSelect"></select>
+    <button class="debug-jump-btn" onclick="jumpToDirector()">跳转</button>
   </div>
 
   <!-- 题目页 -->
@@ -2795,6 +2832,69 @@ function saveShareImg(){
   document.body.removeChild(a);
   toast('📸 图片已保存');
 }
+
+
+// ============ 调试面板 ============
+let _heroClickCount=0,_heroClickTimer=null;
+(function setupDebug(){
+  // 三击 🎬 图标显示调试面板
+  var heroIcon=document.querySelector('.hero-icon');
+  if(heroIcon){
+    heroIcon.style.cursor='default';
+    heroIcon.addEventListener('click',function(){
+      _heroClickCount++;
+      if(_heroClickTimer)clearTimeout(_heroClickTimer);
+      if(_heroClickCount>=3){
+        _heroClickCount=0;
+        var panel=document.getElementById('debugPanel');
+        if(panel){
+          panel.classList.toggle('show');
+          if(panel.classList.contains('show'))populateDebugSelect();
+        }
+      }
+      _heroClickTimer=setTimeout(function(){_heroClickCount=0;},800);
+    });
+  }
+  // 也支持 URL 参数 ?d=INDSH
+  var params=new URLSearchParams(window.location.search);
+  var dParam=params.get('d');
+  if(dParam){
+    setTimeout(function(){jumpToDirector(dParam);},300);
+  }
+})();
+
+function populateDebugSelect(){
+  var sel=document.getElementById('debugDirectorSelect');
+  if(!sel||sel.options.length>0)return;
+  var codes=Object.keys(DIR).filter(function(k){return k!=='SecretA';});
+  codes.sort();
+  codes.forEach(function(code){
+    var d=DIR[code];
+    var opt=document.createElement('option');
+    opt.value=code;
+    opt.textContent=d.em+' '+d.n+' ('+code+')';
+    sel.appendChild(opt);
+  });
+}
+
+function jumpToDirector(code){
+  if(!code){
+    var sel=document.getElementById('debugDirectorSelect');
+    code=sel.value;
+  }
+  if(!code||!DIR[code])return;
+  // 设置分数以匹配目标 type code
+  ALLK.forEach(function(k){scores[k]=0;});
+  for(var i=0;i<5;i++){
+    var ch=code[i];
+    scores[ch]=5;
+  }
+  // 跳过 teaser 和付费
+  window._skipTeaser=true;
+  markPurchased();
+  showResult();
+}
+
 
 // ============ 初始 ============
 show('welcome');
